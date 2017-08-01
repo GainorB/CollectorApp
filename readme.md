@@ -11,3 +11,7 @@ An application built for people to manage their collections!
 ### MISC TECH
 * JWTokens to secure endpoints
 * Passport JWT Strategy 
+* Axios
+* React Router
+* Securing React endpoints
+* Local Storage

@@ -9,17 +9,17 @@ router.post('/:id/new/', passport.authenticate('jwt', {session: false}), (req, r
     console.log(req.body);
     const userID = req.params.id;
     // EXTRACT FORM DATA
-    const { category, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1, image2 } = req.body;
+    const { category, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = req.body;
 
     // INSERT DATA INTO OBJECT
-    const newPost = { category, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1, image2 };
+    const newPost = { category, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image };
 
     // ERROR CHECKING
-    if(Object.values(newPost).indexOf('') >= 0){
+    // if(Object.values(newPost).indexOf('') >= 0){
 
-        res.status(400).json({ success: false, message: 'Please fill in all fields' });
+        // res.status(400).json({ success: false, message: 'Please fill in all fields' });
     
-    } else {
+    // } else {
         // ADD NEW POST
         Collections.new(newPost, userID)
             .then(post => { 
@@ -29,7 +29,7 @@ router.post('/:id/new/', passport.authenticate('jwt', {session: false}), (req, r
                 // console.error(err);
                 res.status(400).json({ success: false, message: `Please fill in ${err.column}` }); 
             });
-    }
+   // }
 });
 
 router.get('/mine/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
@@ -46,8 +46,8 @@ router.get('/mine/:id', passport.authenticate('jwt', {session: false}), (req, re
 
 router.put('/update/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     const postID = parseInt(req.params.id);
-    const { category, userID, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1, image2 } = req.body; 
-    const post = { category, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1, image2 };
+    const { category, userID, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1 } = req.body; 
+    const post = { category, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1 };
 
     Collections.edit(post, userID, postID)
         .then(res.status(200).json({ success: true, message: 'Post updated' }))

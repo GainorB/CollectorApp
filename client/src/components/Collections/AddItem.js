@@ -18,8 +18,7 @@ class AddItem extends Component {
             purchasedfrom: '',
             worth: 0,
             forsale: '',
-            image1: '',
-            image2: '',
+            image: ''
         }
 
         this.handleNewItem = this.handleNewItem.bind(this);
@@ -37,7 +36,7 @@ class AddItem extends Component {
         e.preventDefault();
 
         const { category, brand, title, condition, size, purchasedfor, purchasedfrom,
-                worth, forsale, image1, image2 } = this.state;
+                worth, forsale, image } = this.state;
 
         const { token } = this.props;
 
@@ -48,7 +47,7 @@ class AddItem extends Component {
             url: endpoint,
             data: {
                 category, brand, title, condition, size, purchasedfor, purchasedfrom,
-                worth, forsale, image1, image2
+                worth, forsale, image
             },
             headers: {
                 'Content-Type': 'application/json',

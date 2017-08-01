@@ -9,7 +9,8 @@ import Navbar from './components/Navbar';
 import Collection from './components/Collections/Collection';
 import AddItem from './components/Collections/AddItem';
 
-import './App.css';
+import './css/style.css';
+import './css/flexboxgrid.css';
 
 const link = 'http://localhost:3000/';
 
@@ -54,12 +55,12 @@ class App extends Component {
 
     const endpoint = link + 'users/profile/' + userID;
 
-    axios.get(endpoint, { 
-      headers: {
-        Authorization: token
-      },
-      id: userID 
-    })
+    axios({
+      method: 'GET',
+      url: endpoint,
+      data: { id: userID },
+      headers: { 'Content-Type': 'application/json', 'Authorization': token },
+      })
       .then(user => {
         this.setState({ user: user.data.user });
       })

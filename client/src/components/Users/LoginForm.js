@@ -21,8 +21,8 @@ export default class LoginForm extends Component {
         if(!this.state.forgotPassword){
             return (
                 <div className="LoginForm">
-                    <form onSubmit={this.props.handleLogin} >
                         <p id="message" style={{ display: this.props.message !== '' ? "block" : "none" }}>{this.props.message}</p>
+                    <form onSubmit={this.props.handleLogin} >
                         <input type="text" name="username" placeholder="username" onChange={this.props.handleChange} required/>
                         <input type="password" name="password" placeholder="Password" onChange={this.props.handleChange} required/>
                         <p id="forgot"><span onClick={()=>{this.toggleForgottenPassword()}}>Forgot password?</span></p>
@@ -34,9 +34,9 @@ export default class LoginForm extends Component {
             return (
                 <div className="ForgotForm">
                     <p id="forgotTitle">Forgot Password</p>
+                        <p id="message" style={{ display: this.props.message !== '' ? "block" : "none" }}>{this.props.message}</p>
                     <form onSubmit={this.props.handleForgotten}>
                         <input type="email" name="email" placeholder="Email" onChange={this.props.handleChange} required/>
-                        <p id="message" style={{ display: this.props.message !== '' ? "block" : "none" }}>{this.props.message}</p>
                         <p id="forgot"><span onClick={()=>{this.toggleForgottenPassword()}}>Return to login?</span></p> 
                         <input type="submit" value="Forgot password" />
                     </form>
