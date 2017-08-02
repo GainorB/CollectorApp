@@ -103,6 +103,10 @@ a:hover {
 /*
 * COLLECTION PAGE
 */
+#collection {
+    width: 100%;
+}
+
 .boxbox {
     background-color: #786483;
     border: 1px solid #312842;
@@ -125,8 +129,14 @@ a:hover {
     margin: 0;
 }
 
+img {
+    max-width: 25vw;
+    max-height: 35vh;
+    border: 1px solid #312842;
+}
+
 .cTitle {
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 700;
     text-transform: uppercase;
     text-align: center;
@@ -134,13 +144,15 @@ a:hover {
 }
 
 .cInfo {
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .cDate {
     font-size: 12px;
+    text-align: center;
+    display: block;
 }
 
 i {

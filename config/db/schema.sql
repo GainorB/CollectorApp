@@ -28,3 +28,26 @@ CREATE TABLE IF NOT EXISTS collection(
     CHECK (category = 'Footwear'),
     FOREIGN KEY (userid) REFERENCES users(id)
 );
+
+INSERT INTO collection(userid, category, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image) VALUES
+    (1, 'Footwear', 'Nike', 'Jordan 1 OG Black Toe', 10, 10, 180, 'Nike.com', 300, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/0/1/012566_1.jpg'),
+    (1, 'Footwear', 'Nike', 'Jordan 1 OG Bred 2016', 10, 10, 180, 'Nike.com', 450, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/6/3/63611743093-air-jordan-1-retro-high-og-banned-2016-release-black-varsity-red-white-012496_1.jpg'),
+    (1, 'Footwear', 'Nike', 'Jordan 1 OG Top Three', 10, 10, 180, 'Nike.com', 250, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/0/1/012587_1_1.jpg'),
+    (1, 'Footwear', 'Nike', 'Jordan 1 OG Wings', 10, 10, 270, 'Nike.com', 280, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/8/0/801041_1.jpg'),
+    (1, 'Footwear', 'Nike', 'Jordan 1 OG Royal 2017', 10, 10, 180, 'Nike.com', 450, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/8/0/800564_1.jpg'),
+    (1, 'Footwear', 'Adidas', 'Yeezy V2 Oreo', 10, 10.5, 220, 'Adidas.com', 650, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/2/0/201519_1.jpg'),
+    (1, 'Footwear', 'Adidas', 'Yeezy V2 Bred', 10, 10, 220, 'Adidas.com', 750, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/8/0/800389_1.jpg'),
+    (1, 'Footwear', 'Adidas', 'Yeezy V2 Zebra', 10, 10, 220, 'Adidas.com', 650, 'No', 'https://www.flightclub.com/media/catalog/product/cache/1/image/800x570/9df78eab33525d08d6e5fb8d27136e95/8/0/800502_1.jpg');
+
+
+
+
+
+
+
+
+
+
+
+
+
