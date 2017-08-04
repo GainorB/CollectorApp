@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect, browserHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './components/Users/Login';
@@ -11,7 +11,6 @@ import AddItem from './components/Collections/AddItem';
 import UpdateItem from './components/Collections/UpdateItem'
 
 import './css/style.css';
-import './css/flexboxgrid.css';
 
 const link = 'http://localhost:3000/';
 
@@ -71,7 +70,6 @@ class App extends Component {
       headers: { 'Content-Type': 'application/json', 'Authorization': token },
     })
     .then(updated => {
-      browserHistory.push('/update'); 
       this.setState({ updatedItemInfo: updated.data.info }); 
     })
     .catch(err => console.error(err));

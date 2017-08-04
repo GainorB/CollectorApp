@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../css/flexboxgrid.css';
 
 const AddItemForm = props => {
 

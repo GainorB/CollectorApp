@@ -37,12 +37,16 @@ class UpdateItem extends Component {
 
     render(){
         return (
-            <UpdateItemForm 
-                handleUpdate={this.handleUpdate}
-                handleChange={this.handleChange}
-                clearMessage={this.clearMessage}
-                message={this.state.message}
-            />
+            <div className="UpdateWrapper">
+                <UpdateItemForm 
+                    updatedItemInfo={this.props.updatedItemInfo}
+                    handleUpdate={this.handleUpdate}
+                    handleChange={this.handleChange}
+                    clearMessage={this.clearMessage}
+                    message={this.state.message}
+                    {...this.state}
+                />
+            </div>
         );
     }
 }

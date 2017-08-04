@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 const link = 'http://localhost:3000/';
 
@@ -61,14 +62,12 @@ class Collection extends Component {
             e.target.parentNode.style.height = '50px';
             e.target.parentNode.querySelector('img').style.display = 'none';
             e.target.parentNode.querySelector('.hidden').style.display = 'none';
-            e.target.parentNode.querySelector('.fa-pencil').style.display = 'none';
             this.setState({ minimize: !this.state.minimize });
         } else {
             e.target.parentNode.querySelector('.minimizedTitle').innerHTML = '';
             e.target.parentNode.style.height = '';
             e.target.parentNode.querySelector('img').style.display = '';
             e.target.parentNode.querySelector('.hidden').style.display = '';
-            e.target.parentNode.querySelector('.fa-pencil').style.display = '';
             this.setState({ minimize: !this.state.minimize });
         }
     }
@@ -98,10 +97,11 @@ class Collection extends Component {
                                     {(element.purchasedfrom === '') ? <p></p> : <p>Purchased From: <strong>{element.purchasedfrom}</strong></p> }
                                     {(element.worth === 0) ? <p></p> : <p>Worth? <strong>${element.worth}</strong></p> }
                                     {(element.forsale === '') ? <p></p> : <p>For Sale? <strong>{element.forsale}</strong></p> }
-                                    <br/><p><span className="cDate">Date Added: {element.date_added}</span></p>
+                                    <br/><p><span className="cDate">{element.date_added}</span></p>
                                     </span>
+                                    <Link className="updateCollection" to="/update" onClick={() => this.handleUpdate(element.id)}>Update {element.title}?</Link>
                                 </p>
-                                <i className="fa fa-pencil" aria-hidden="true" onClick={() => this.handleUpdate(element.id)}></i>
+                                {/* <i className="fa fa-pencil" aria-hidden="true"}></i> */}
                             </div>
                         );
                     })}
