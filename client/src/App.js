@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, browserHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './components/Users/Login';
@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Collection from './components/Collections/Collection';
 import AddItem from './components/Collections/AddItem';
+import UpdateItem from './components/Collections/UpdateItem'
 
 import './css/style.css';
 import './css/flexboxgrid.css';
@@ -23,7 +24,9 @@ class App extends Component {
       user: null,
       isLoggedIn: false,
       token: null,
-      collection: []
+      collection: [],
+      itemToUpdate: 0,
+      updatedItemInfo: {}
     }
 
     // BINDING
@@ -36,6 +39,8 @@ class App extends Component {
     this.fetchProfile = this.fetchProfile.bind(this);
     this.fetchMyCollection = this.fetchMyCollection.bind(this);
     this.addComponent = this.addComponent.bind(this);
+    this.updateComponent = this.updateComponent.bind(this);
+    this.updateAnItem = this.updateAnItem.bind(this);
   }
 
   // GRAB TOKEN AND USERID FROM LOCALSTORAGE
@@ -47,6 +52,29 @@ class App extends Component {
       this.setState({ token, isLoggedIn: true });
       this.fetchProfile(userID, token);
     }
+  }
+
+  // THIS FUNCTION GETS CALLED IN COLLECTION COMPONENT
+  // GETS PASSED AN IDEA, FROM THERE SETS STATE OF THE ITEM TO UPDATE
+  // FETCH THIS ITEM FROM DATABASE AND SEND IT TO UPDATE ITEM PAGE TO CHANGE DETAILS
+  updateAnItem(id){
+
+    const { token, user } = this.state;
+
+    this.setState({ itemToUpdate: id });
+
+    const endpoint = link + 'collections/' + user.id + '/update/info/' + id;
+
+    axios({
+      method: 'GET',
+      url: endpoint,
+      headers: { 'Content-Type': 'application/json', 'Authorization': token },
+    })
+    .then(updated => {
+      browserHistory.push('/update'); 
+      this.setState({ updatedItemInfo: updated.data.info }); 
+    })
+    .catch(err => console.error(err));
   }
 
   // FETCH PROFILE FROM LOCAL STORAGE
@@ -80,11 +108,11 @@ class App extends Component {
   // FETCH MY COLLECTION FROM DATABASE
   fetchMyCollection(id, token){
       const endpoint = link + `collections/mine/` + id;
+      // const endpoint = link + 'collections/' + id + '/mine/';
       axios.get(endpoint, {
           headers: {
               Authorization: token
-          },
-          id
+          }
       })
       .then(collection => {
           this.setState({ collection: collection.data.collection });
@@ -104,14 +132,15 @@ class App extends Component {
 
   // MY
   collectionComponent(){
-    const { token, isLoggedIn, user } = this.state;
+    const { token, isLoggedIn, user, collection } = this.state;
     return (
       <Collection
         isLoggedIn={isLoggedIn}
         token={token}
         user={user}
         fetchMyCollection={this.fetchMyCollection}
-        collection={this.state.collection}
+        collection={collection}
+        updateAnItem={this.updateAnItem}
       />
     );
   }
@@ -158,6 +187,20 @@ class App extends Component {
     );
   }
 
+  // UPDATE ITEM
+  updateComponent(){
+    const { token, isLoggedIn, user, updatedItemInfo, itemToUpdate } = this.state;
+    return (
+    <UpdateItem 
+        isLoggedIn={isLoggedIn}
+        token={token}
+        user={user}
+        itemToUpdate={itemToUpdate}
+        updatedItemInfo={updatedItemInfo}
+      />  
+    );
+  }
+
   // CHECK IF USER IS AUTHENTICATED
   requireAuth(path){
     const { token, isLoggedIn } = this.state;
@@ -167,6 +210,8 @@ class App extends Component {
           return this.collectionComponent();
         case "/add":
           return this.addComponent();
+        case "/update":
+          return this.updateComponent();
         default:
           return (<Redirect to="/my" />);
       }
@@ -192,17 +237,18 @@ class App extends Component {
   }
 
   render() {
-    const { token, isLoggedIn } = this.state;
+    const { token, isLoggedIn, itemToUpdate } = this.state;
     return (
         <Router>
           <div>
-            <Navbar token={token} isLoggedIn={isLoggedIn} />
+            <Navbar token={token} isLoggedIn={isLoggedIn} itemToUpdate={itemToUpdate} />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/new" render={() => this.requireAuth("/new")} />
               <Route path="/login" render={() => this.requireAuth("/login")} />
               <Route path="/my" render={() => this.requireAuth("/my")} /> 
-              <Route path="/add" render={() => this.requireAuth("/add")} /> 
+              <Route path="/add" render={() => this.requireAuth("/add")} />
+              <Route path="/update" render={() => this.requireAuth("/update")} />
               <Route component={this.NoMatch}/>
             </Switch>
           </div>

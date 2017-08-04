@@ -9,7 +9,6 @@ class AddItem extends Component {
         super(props);
 
         this.state = {
-            category: '',
             brand: '',
             title: '',
             condition: 0,
@@ -18,7 +17,8 @@ class AddItem extends Component {
             purchasedfrom: '',
             worth: 0,
             forsale: '',
-            image: ''
+            image: '',
+            message: ''
         }
 
         this.handleNewItem = this.handleNewItem.bind(this);
@@ -35,7 +35,7 @@ class AddItem extends Component {
     handleNewItem(e){
         e.preventDefault();
 
-        const { category, brand, title, condition, size, purchasedfor, purchasedfrom,
+        const { brand, title, condition, size, purchasedfor, purchasedfrom,
                 worth, forsale, image } = this.state;
 
         const { token } = this.props;
@@ -46,7 +46,7 @@ class AddItem extends Component {
             method: 'POST',
             url: endpoint,
             data: {
-                category, brand, title, condition, size, purchasedfor, purchasedfrom,
+                brand, title, condition, size, purchasedfor, purchasedfrom,
                 worth, forsale, image
             },
             headers: {
