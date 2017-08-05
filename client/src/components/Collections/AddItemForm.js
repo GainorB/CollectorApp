@@ -8,7 +8,7 @@ const handleClick = () => {
 
     return (
         <div className="AddItemForm">
-            <p id="message" style={{ display: props.message !== '' ? "block" : "none" }}>{props.message}</p>
+            <p className="formMessage" style={{ display: props.message !== '' ? "block" : "none" }}>{props.message}</p>
                 <form onSubmit={props.handleNewItem}>
                     <p className="formTitle">Required</p>
                     <p><p className="tooltip">Select a brand for your listing.</p>
@@ -37,7 +37,7 @@ const handleClick = () => {
                         <option value="No">No</option>
                         </select></p>
                     </div>
-                    <input type="submit" value="New Item" /> <input type="reset" value="Reset" />
+                    <input type="submit" value="new item" /> <input type="reset" value="reset" />
                 </form>
         </div>
     );

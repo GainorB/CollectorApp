@@ -113,7 +113,7 @@ class Collection extends Component {
         return (
             <div className="collectionPage">
                 <p className="search"><input type="text" name="search" placeholder="Search" onChange={this.handleSearch} /></p>
-                <p id="message" style={{ display: this.state.message !== '' ? "block" : "none" }}>{this.state.message}</p>
+                <p className="formMessage" style={{ display: this.state.message !== '' ? "block" : "none" }}>{this.state.message}</p>
                 {this.renderCollection()}
             </div>
         );

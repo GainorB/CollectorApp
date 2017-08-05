@@ -65,14 +65,14 @@ class Login extends Component {
     }
 
     render(){
-        return(
-            <LoginForm 
-                handleLogin={this.handleLogin}
-                handleChange={this.handleChange}
-                clearMessage={this.clearMessage}
-                message={this.state.message}
-                />
-        );
+            return(
+                <LoginForm 
+                    handleLogin={this.handleLogin}
+                    handleChange={this.handleChange}
+                    clearMessage={this.clearMessage}
+                    message={this.state.message}
+                    />
+            );
     }
 
 }

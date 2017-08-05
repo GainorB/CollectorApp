@@ -71,8 +71,8 @@ router.put('/:userID/update/:postID', passport.authenticate('jwt', {session: fal
     console.log(updatedPost);
 
     Collections.edit(updatedPost, userID, postID)
-        .then(()=> res.status(200).json({ success: true, message: 'Post updated' }))
-        .catch(()=> res.status(400).json({ success: false, message: 'Post not updated' }));
+        .then(update => res.status(200).json({ success: true, message: 'Post updated' }))
+        .catch(err => res.status(400).json({ success: false, message: 'Post not updated' }));
 });
 
 // DELETE AN ITEM

@@ -1,6 +1,6 @@
 body {
     font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     background-color: #9c89a1;
     color: #312842;
     /* margin: 25px; */
@@ -16,10 +16,9 @@ body {
 
 .wrapper {
     display: grid;
-    /* grid-template-columns: 1fr 1fr 1fr; */
-    grid-template-columns: repeat(3, auto);
-    grid-gap: 1em;
-    grid-auto-rows: minmax(auto, auto);
+    grid-template-columns: 1fr 1fr 1fr;
+    /* grid-gap: 1em; */
+    grid-auto-rows: minmax(100%, auto);
 }
 
 
@@ -126,6 +125,7 @@ input[type]:focus {
 /*
 * LINKS
 */
+
 a:active, a:link, a:visited {
     color: #312842;
     text-decoration: none;
@@ -138,6 +138,7 @@ a:hover {
 /*
 * NAVBAR LINKS
 */
+
 #nav {
     list-style-type: none;
     text-transform: uppercase;
@@ -182,6 +183,7 @@ a:hover {
 
 .search {
     text-align: center;
+    margin-top: 50px;
 }
 
 .search input {
@@ -214,7 +216,7 @@ a:hover {
     border: 1px solid #312842;
     padding: 5px 20px 15px;
     margin: 0 auto;
-    width: 370px; 
+    width: 430px; 
     /* margin-left: 8px; */
     /* margin-right: 10px;
     margin-bottom: 10px; */
@@ -235,6 +237,10 @@ a:hover {
 
 .boxbox p {
     margin: 0;
+}
+
+.boxbox img {
+    margin-top: 10px;
 }
 
 img {
@@ -327,9 +333,33 @@ img:hover {
 
 .AddItemForm {
     text-align: center;
+    margin-top: 100px;
 }
 
 .moreOpt:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.formMessage {
+    font-size: 30px;
+    color: #3f634c;
+    text-align: center;
+    display: block;
+}
+
+/*
+* NEW USER/LOGIN/FORGOT FORMS
+*/
+
+.NewUserForm,
+.ForgotForm,
+.LoginForm {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.forgot:hover {
     text-decoration: underline;
     cursor: pointer;
 }
