@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 
 // CREATE A NEW ITEM
 router.post('/:id/new/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    console.log(req.body);
     const userID = req.params.id;
     // EXTRACT FORM DATA
     const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = req.body;
@@ -61,12 +60,17 @@ router.get('/mine/:id', passport.authenticate('jwt', {session: false}), (req, re
 });
 
 // UPDATE AN ITEM
-router.put('/update/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    const postID = parseInt(req.params.id);
-    const { userID, brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1 } = req.body; 
-    const post = { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image1 };
+router.put('/:userID/update/:postID', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+    const postID = parseInt(req.params.postID);
+    const userID = parseInt(req.params.userID);
 
-    Collections.edit(post, userID, postID)
+    const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = req.body.post; 
+    
+    const updatedPost = { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image };
+
+    console.log(updatedPost);
+
+    Collections.edit(updatedPost, userID, postID)
         .then(()=> res.status(200).json({ success: true, message: 'Post updated' }))
         .catch(()=> res.status(400).json({ success: false, message: 'Post not updated' }));
 });

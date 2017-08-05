@@ -5,8 +5,8 @@ CREATE DATABASE collector_app;
 
 CREATE TABLE IF NOT EXISTS users(
     id BIGSERIAL PRIMARY KEY NOT NULL,
-    username VARCHAR(30) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(150) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     token TEXT
 );
@@ -15,14 +15,14 @@ CREATE TABLE IF NOT EXISTS collection(
     id BIGSERIAL PRIMARY KEY NOT NULL,
     userid INTEGER NOT NULL,
     date_added TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    brand VARCHAR(20) NOT NULL,
-    title VARCHAR(200) NOT NULL,
+    brand VARCHAR(30) NOT NULL,
+    title VARCHAR(300) NOT NULL,
     condition INTEGER NOT NULL,
     size INTEGER NOT NULL,
     purchasedfor INTEGER,
-    purchasedfrom VARCHAR(15),
+    purchasedfrom VARCHAR(30),
     worth INTEGER,
-    forsale VARCHAR(3),
+    forsale VARCHAR(4),
     image TEXT,
     FOREIGN KEY (userid) REFERENCES users(id)
 );

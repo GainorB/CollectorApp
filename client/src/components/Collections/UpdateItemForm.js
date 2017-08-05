@@ -4,34 +4,51 @@ const UpdateItemForm = props => {
     return (
         <div>
             <form onSubmit={props.handleUpdate}>
-                <p><span className="updateInfo">
-                    Current Brand: {props.updatedItemInfo.brand}<br/>
-                    New Brand: {props.brand}
-                    </span>
-                <p><input type="text" name="brand" onChange={props.handleChange} maxLength="15" required/></p></p>
+                <p><span className="currentInfo">
+                    {props.updatedItemInfo.brand}</span><br/>
+                    <span className="updateInfo">{props.brand}</span>
+                <p><input type="text" name="brand" placeholder="Update Brand" onChange={props.handleChange} maxLength="15" required/></p></p>
                 
-                <p><span className="updateInfo">Current Title: {props.updatedItemInfo.title}</span>
-                <p><input type="text" name="title" onChange={props.handleChange} maxLength="50" required/></p></p>
+                <p><span className="currentInfo">
+                    {props.updatedItemInfo.title}</span><br/>
+                    <span className="updateInfo">{props.title}</span>
+                <p><input type="text" name="title" placeholder="Update Title" onChange={props.handleChange} maxLength="50" required/></p></p>
                 
-                <p><span className="updateInfo">Current Condition: {props.updatedItemInfo.condition}</span>
-                <p><input type="number" name="condition" onChange={props.handleChange} min="0" max="10" required/></p></p>
+                <p><span className="currentInfo">
+                    {props.updatedItemInfo.condition}/10</span><br/>
+                    <span className="updateInfo">{props.condition}/10</span>
+                <p><input type="number" name="condition" placeholder="Update Condition" onChange={props.handleChange} min="0" max="10" required/></p></p>
                 
-                <p><span className="updateInfo">Current Size: {props.updatedItemInfo.size}</span>
-                <p><input type="number" name="size" onChange={props.handleChange} min="0" max="20" required/></p></p>
+                <p><span className="currentInfo">
+                    {props.updatedItemInfo.size}</span><br/>
+                    <span className="updateInfo">{props.size}</span>
+                <p><input type="number" name="size" placeholder="Update Size" onChange={props.handleChange} min="0" max="20" required/></p></p>
                 
-                <p><span className="updateInfo">Previously purchased for? {props.updatedItemInfo.purchasedfor}</span>
-                <p><input type="number" name="purchasedfor" onChange={props.handleChange} /></p></p>
+                <p><span className="currentInfo">
+                    Previously purchased for? ${props.updatedItemInfo.purchasedfor}</span><br/>
+                    <span className="updateInfo">${props.purchasedfor}</span>
+                <p><input type="number" name="purchasedfor" placeholder="Update Purchase Price" onChange={props.handleChange} /></p></p>
                 
-                <p><span className="updateInfo">Previously purchased from? {props.updatedItemInfo.purchasedfrom}</span>
-                <p><input type="text" name="purchasedfrom" onChange={props.handleChange} /></p></p>
+                <p><span className="currentInfo">
+                    Previously purchased from? {props.updatedItemInfo.purchasedfrom}</span><br/>
+                    <span className="updateInfo">{props.purchasedfrom}</span>
+                <p><input type="text" name="purchasedfrom" placeholder="Update Purchased From" onChange={props.handleChange} /></p></p>
                 
-                <p><span className="updateInfo">Current Worth: {props.updatedItemInfo.worth}</span>
-                <p><input type="number" name="worth" onChange={props.handleChange} /></p></p>
+                <p><span className="currentInfo">
+                    Current: ${props.updatedItemInfo.worth}</span><br/>
+                    <span className="updateInfo">${props.worth}</span>
+                <p><input type="number" name="worth" placeholder="Update Sneaker Worth" onChange={props.handleChange} /></p></p>
                 
-                <p><span className="updateInfo">Current Image</span><br/><img src={props.updatedItemInfo.image} className="updateImage" />
-                <p><input type="url" name="image" onChange={props.handleChange} /></p></p>
+                <p><span className="currentInfo">
+                    Current Image</span><br/>
+                    <img src={props.updatedItemInfo.image} alt={props.updatedItemInfo.title} className="updateImage" /><br/>
+                    <span className="updateInfo">New Image</span><br/>
+                    <img src={props.image} alt={props.title} className="updateImage" />
+                <p><input type="url" name="image" placeholder="Update Image" onChange={props.handleChange} /></p></p>
                 
-                <p><span className="updateInfo">Previously for sale? {props.updatedItemInfo.forsale}</span>
+                <p><span className="currentInfo">
+                    Previously for sale? {props.updatedItemInfo.forsale}</span><br/>
+                    <span className="updateInfo">Now, I guess its for sale? {props.forsale}</span>
                 <p><select name="forsale" onChange={props.handleChange}>
                 <option defaultValue="change">Change Me</option>
                 <option value="Yes">Yes</option>

@@ -43,8 +43,13 @@ body {
     max-height: 400px;
 }
 
+.currentInfo {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
 .updateInfo {
-    font-size: 17px;
+    font-size: 19px;
     letter-spacing: 1px;
 }
 

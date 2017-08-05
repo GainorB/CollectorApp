@@ -26,11 +26,11 @@ Collection.delete = (userID, postID) => {
 
 // EDIT A POST
 Collection.edit = (post, userID, postID) => {
-    return db.none(`UPDATE collection SET brand = $1, title = $2, condition = $3
-                    size = $4, purchasedfor = $5, purchasedfrom = $6, worth = $7, forsale = $8
-                    image = $9 WHERE id = $10`,
+    return db.none(`UPDATE collection SET brand = $1, title = $2, condition = $3,
+                    size = $4, purchasedfor = $5, purchasedfrom = $6, worth = $7, forsale = $8,
+                    image = $9 WHERE id = $10 AND userid = $11`,
                 [post.brand, post.title, post.condition, post.size, post.purchasedfor,
-                post.purchasedfrom, post.worth, post.forsale, post.image, postID]);
+                post.purchasedfrom, post.worth, post.forsale, post.image, postID, userID]);
 }
 
 // GET INFO REGARDING AN UPDATED POST
