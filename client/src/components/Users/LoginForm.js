@@ -22,11 +22,14 @@ export default class LoginForm extends Component {
             return (
                 <div className="LoginForm">
                         <p id="message" style={{ display: this.props.message !== '' ? "block" : "none" }}>{this.props.message}</p>
+                    
                     <form onSubmit={this.props.handleLogin} >
-                        <p><p className="tooltip">Username</p>
-                            <input type="text" name="username" placeholder="username" onChange={this.props.handleChange} required/></p>
-                        <p><p className="tooltip">Password</p>
-                            <input type="password" name="password" placeholder="Password" onChange={this.props.handleChange} required/></p>
+                        <div><p className="tooltip"><label htmlFor='username'>Username</label></p>
+                            <input type="text" name="username" placeholder="username" onChange={this.props.handleChange} required/></div>
+
+                        <div><p className="tooltip"><label htmlFor='password'>Password</label></p>
+                            <input type="password" name="password" placeholder="Password" onChange={this.props.handleChange} required/></div>
+
                         <p className="forgot"><span onClick={()=>{this.toggleForgottenPassword()}}>Forgot password?</span></p>
                         <input type="submit" value="login" />
                     </form>
@@ -37,7 +40,7 @@ export default class LoginForm extends Component {
                 <div className="ForgotForm">
                         <p id="message" style={{ display: this.props.message !== '' ? "block" : "none" }}>{this.props.message}</p>
                     <form onSubmit={this.props.handleForgotten}>
-                        <p className="tooltip">Forgot Password</p>
+                        <p className="tooltip"><label htmlFor='email'>Forgot Password</label></p>
                         <p><input type="email" name="email" placeholder="Email" onChange={this.props.handleChange} required/></p>
                         <p className="forgot"><span onClick={()=>{this.toggleForgottenPassword()}}>Return to login?</span></p> 
                         <input type="submit" value="forgot password" />

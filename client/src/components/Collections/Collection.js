@@ -8,7 +8,8 @@ class Collection extends Component {
 
         this.state = {
             message: '',
-            minimize: false
+            minimize: false,
+            mode: ''
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -77,15 +78,15 @@ class Collection extends Component {
     renderCollection(){
         const { collection } = this.props;
         return (
-            <div className="wrapper">
+            <div className="wrapper container">
                 {collection.map((element, index) => {
                     return (
                             <div className="boxbox" key={index}>
                                 <i className="fa fa-times" aria-hidden="true" onClick={() => this.handleDelete(element.id)}></i>
                                 {(this.state.minimize === false) ? <i className="fa fa-minus" aria-hidden="true" onClick={this.handleReduce} ></i> : <i className="fa fa-plus" aria-hidden="true" onClick={this.handleReduce} ></i>}
                                 <p className="minimizedTitle"></p>
-                                <p><img id={index} src={element.image} alt={element.title} onClick={this.handleClick} /></p>
-                                    <p className="hidden">
+                                <div><img id={index} src={element.image} alt={element.title} onClick={this.handleClick} /></div>
+                                    <div className="hidden">
                                     <p><span className="cTitle">{element.brand} {element.title}</span></p><br/>
                                     <span className="cInfo">
                                     <p>Condition: {element.condition}/<strong>10</strong></p>
@@ -98,7 +99,7 @@ class Collection extends Component {
                                     <br/><p><span className="cDate">{element.date_added}</span></p>
                                     </span>
                                     <Link className="updateCollection" to="/update" onClick={() => this.handleUpdate(element.id)}>Update {element.title}?</Link>
-                                </p>
+                                </div>
                                 {/* <i className="fa fa-pencil" aria-hidden="true"}></i> */}
                             </div>
                         );

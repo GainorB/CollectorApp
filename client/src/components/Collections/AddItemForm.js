@@ -11,31 +11,40 @@ const handleClick = () => {
             <p className="formMessage" style={{ display: props.message !== '' ? "block" : "none" }}>{props.message}</p>
                 <form onSubmit={props.handleNewItem}>
                     <p className="formTitle">Required</p>
-                    <p><p className="tooltip">Select a brand for your listing.</p>
-                    <input type="text" name="brand" onChange={props.handleChange} maxLength="15" required/></p>
-                    <p><p className="tooltip">Select a title for your listing.</p>
-                    <input type="text" name="title" onChange={props.handleChange} maxLength="50" required/></p>
-                    <p><p className="tooltip">Condition of your item? Out of 10. </p>
-                    <input type="number" name="condition" onChange={props.handleChange} min="0" max="10" required/></p>
-                    <p><p className="tooltip">What size is your item?</p>
-                    <input type="number" name="size" onChange={props.handleChange} min="0" max="20" required/></p>
-                    <p className="formTitle moreOpt" onClick={() => handleClick()}>More Options?</p>
+
+                    <div><p className="tooltip"><label htmlFor='brand'>Select a brand for your listing.</label></p>
+                    <input type="text" name="brand" onChange={props.handleChange} maxLength="15" required/></div>
+
+                    <div><p className="tooltip"><label htmlFor='title'>Select a title for your listing.</label></p>
+                    <input type="text" name="title" onChange={props.handleChange} maxLength="50" required/></div>
+
+                    <div><p className="tooltip"><label htmlFor='condition'>Condition of your item? Out of 10.</label></p>
+                    <input type="number" name="condition" onChange={props.handleChange} min="0" max="10" required/></div>
+
+                    <div><p className="tooltip"><label htmlFor='size'>What size is your item?</label></p>
+                    <input type="number" name="size" onChange={props.handleChange} min="0" max="20" required/></div>
+
+                    <div className="formTitle moreOpt" onClick={() => handleClick()}>More Options?</div>
                     
                     <div className="hidden">
-                        <p><p className="tooltip">How much did you spend on your item?</p>
-                        <input type="number" name="purchasedfor" onChange={props.handleChange} /></p>
-                        <p><p className="tooltip">Where did you purchase from?</p>
-                        <input type="text" name="purchasedfrom" onChange={props.handleChange} /></p>
-                        <p><p className="tooltip">How much do you think your item is worth?</p>
-                        <input type="number" name="worth" onChange={props.handleChange} /></p>
-                        <p><p className="tooltip">Want to include an image? Insert the URL</p>
-                        <input type="url" name="image" onChange={props.handleChange} /></p>
-                        <p><p className="tooltip">For sale?</p>
+                        <div><p className="tooltip"><label htmlFor='purchasedfor'>How much did you spend on your item?</label></p>
+                        <input type="number" name="purchasedfor" onChange={props.handleChange} /></div>
+
+                        <div><p className="tooltip"><label htmlFor='purchasedfrom'>Where did you purchase from?</label></p>
+                        <input type="text" name="purchasedfrom" onChange={props.handleChange} /></div>
+
+                        <div><p className="tooltip"><label htmlFor='worth'>How much do you think your item is worth?</label></p>
+                        <input type="number" name="worth" onChange={props.handleChange} /></div>
+
+                        <div><p className="tooltip"><label htmlFor='image'>Want to include an image? Insert the URL</label></p>
+                        <input type="url" name="image" onChange={props.handleChange} /></div>
+
+                        <div><p className="tooltip"><label htmlFor='forsale'>For sale?</label></p>
                         <select name="forsale" onChange={props.handleChange}>
                         <option defaultValue="change">Change Me</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
-                        </select></p>
+                        </select></div>
                     </div>
                     <input type="submit" value="new item" /> <input type="reset" value="reset" />
                 </form>

@@ -13,8 +13,8 @@ import UpdateItem from './components/Collections/UpdateItem'
 import './css/style.css';
 
 class App extends Component {
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
 
     // INITIAL STATE
     this.state = {

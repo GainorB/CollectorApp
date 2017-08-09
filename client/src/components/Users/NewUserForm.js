@@ -5,12 +5,14 @@ const NewUserForm = (props) => {
         <div className="NewUserForm">
             <p id="message" style={{ display: props.message !== '' ? "block" : "none" }}>{props.message}</p>
             <form onSubmit={props.handleRegister}>
-                <p><p className="tooltip">Username</p>
-                    <input type="text" name="username" placeholder="Username" onChange={props.handleChange} required/></p>
-                <p><p className="tooltip">Email</p>
-                    <input type="email" name="email" placeholder="Email" onChange={props.handleChange} required/></p>
-                <p><p className="tooltip">Password</p>
-                    <input type="password" name="password" placeholder="Password" onChange={props.handleChange} required/></p>
+                <div><p className="tooltip"><label htmlFor='username'>Username</label></p>
+                    <input type="text" name="username" placeholder="Username" onChange={props.handleChange} required/></div>
+
+                <div><p className="tooltip"><label htmlFor='email'>Email</label></p>
+                    <input type="email" name="email" placeholder="Email" onChange={props.handleChange} required/></div>
+
+                <div><p className="tooltip"><label htmlFor='password'>Password</label></p>
+                    <input type="password" name="password" placeholder="Password" onChange={props.handleChange} required/></div>
                 <input type="submit" value="register"/>
             </form>
         </div>
