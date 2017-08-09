@@ -12,14 +12,13 @@ import UpdateItem from './components/Collections/UpdateItem'
 
 import './css/style.css';
 
-const link = 'http://localhost:3000/';
-
 class App extends Component {
   constructor(props){
     super(props);
 
     // INITIAL STATE
     this.state = {
+      link: 'http://localhost:3000/',
       user: null,
       isLoggedIn: false,
       token: null,
@@ -40,6 +39,7 @@ class App extends Component {
     this.addComponent = this.addComponent.bind(this);
     this.updateComponent = this.updateComponent.bind(this);
     this.updateAnItem = this.updateAnItem.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   // GRAB TOKEN AND USERID FROM LOCALSTORAGE
@@ -58,7 +58,7 @@ class App extends Component {
   // FETCH THIS ITEM FROM DATABASE AND SEND IT TO UPDATE ITEM PAGE TO CHANGE DETAILS
   updateAnItem(id){
 
-    const { token, user } = this.state;
+    const { token, user, link } = this.state;
 
     this.setState({ itemToUpdate: id });
 
@@ -79,7 +79,7 @@ class App extends Component {
   // WHEN PAGE REFRESHES AND STATE IS LOST, WE FETCH THE PROFILE FROM LOCAL STORAGE
   fetchProfile(userID, token){
 
-    const endpoint = link + 'users/profile/' + userID;
+    const endpoint = this.state.link + 'users/profile/' + userID;
 
     axios({
       method: 'GET',
@@ -105,8 +105,8 @@ class App extends Component {
 
   // FETCH MY COLLECTION FROM DATABASE
   fetchMyCollection(id, token){
-      const endpoint = link + `collections/mine/` + id;
-      // const endpoint = link + 'collections/' + id + '/mine/';
+      const endpoint = this.state.link + `collections/mine/` + id;
+      // const endpoint = this.state.link + 'collections/' + id + '/mine/';
       axios.get(endpoint, {
           headers: {
               Authorization: token
@@ -121,7 +121,6 @@ class App extends Component {
   // USER LOGS OUT
   // REMOVE TOKEN AND USERID FROM LOCAL STORAGE
   logOut(){
-    console.log("logged out");
     localStorage.removeItem('collectionApp-token');
     localStorage.removeItem('collectionApp-userID');
     // RESET STATE
@@ -130,9 +129,10 @@ class App extends Component {
 
   // MY
   collectionComponent(){
-    const { token, isLoggedIn, user, collection } = this.state;
+    const { token, isLoggedIn, user, collection, link } = this.state;
     return (
       <Collection
+        link={link}
         isLoggedIn={isLoggedIn}
         token={token}
         user={user}
@@ -145,12 +145,14 @@ class App extends Component {
 
   // HOME
   homeComponent(){
-    const { token, isLoggedIn, user } = this.state;
+    const { token, isLoggedIn, user, link } = this.state;
     return (
-      <Home 
+      <Home
+        link={link} 
         isLoggedIn={isLoggedIn}
         token={token}
         user={user}
+        fetchProfile={this.fetchProfile}
       />
     );
   }
@@ -158,7 +160,8 @@ class App extends Component {
   // REGISTER
   newComponent(){
     return (
-      <Register 
+      <Register
+        link={this.state.link} 
         setUser={this.setUser}
       />
     );
@@ -167,7 +170,8 @@ class App extends Component {
   // LOGIN
   loginComponent(){
     return (
-      <Login 
+      <Login
+        link={this.state.link} 
         setUser={this.setUser}
       />
     );
@@ -175,9 +179,10 @@ class App extends Component {
 
   // ADD ITEM
   addComponent(){
-    const { token, isLoggedIn, user } = this.state;
+    const { token, isLoggedIn, user, link } = this.state;
     return (
-    <AddItem 
+    <AddItem
+        link={link} 
         isLoggedIn={isLoggedIn}
         token={token}
         user={user}
@@ -187,9 +192,10 @@ class App extends Component {
 
   // UPDATE ITEM
   updateComponent(){
-    const { token, isLoggedIn, user, updatedItemInfo, itemToUpdate } = this.state;
+    const { token, isLoggedIn, user, updatedItemInfo, itemToUpdate, link } = this.state;
     return (
-    <UpdateItem 
+    <UpdateItem
+        link={link} 
         isLoggedIn={isLoggedIn}
         token={token}
         user={user}
@@ -239,9 +245,9 @@ class App extends Component {
     return (
         <Router>
           <div>
-            <Navbar token={token} isLoggedIn={isLoggedIn} itemToUpdate={itemToUpdate} />
+            <Navbar token={token} isLoggedIn={isLoggedIn} itemToUpdate={itemToUpdate} logOut={this.logOut} />
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" render={() => this.homeComponent()} />
               <Route path="/new" render={() => this.requireAuth("/new")} />
               <Route path="/login" render={() => this.requireAuth("/login")} />
               <Route path="/my" render={() => this.requireAuth("/my")} /> 

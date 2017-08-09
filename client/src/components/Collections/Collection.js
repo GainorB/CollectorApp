@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
-const link = 'http://localhost:3000/';
-
 class Collection extends Component {
     constructor(props){
         super(props);
@@ -45,7 +43,7 @@ class Collection extends Component {
 
     handleDelete(id){
         const userID = this.props.user.id;
-        const endpoint = link + 'collections/' + userID + '/delete/' + id;
+        const endpoint = this.props.link + 'collections/' + userID + '/delete/' + id;
 
         axios.delete(endpoint, {
             headers: { Authorization: this.props.token },

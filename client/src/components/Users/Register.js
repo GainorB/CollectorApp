@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import NewUserForm from './NewUserForm';
-const url = 'http://localhost:3000/';
 
 class Register extends Component {
     constructor(props){
@@ -38,7 +36,7 @@ class Register extends Component {
 
         const { username, password, email } = this.state;
 
-        const endpoint = url + 'users/new';
+        const endpoint = this.props.link + 'users/new';
         axios.post(endpoint, {
             username, email, password
         })

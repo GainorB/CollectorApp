@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import AddItemForm from './AddItemForm';
-const link = 'http://localhost:3000/';
 
 class AddItem extends Component {
     constructor(props){
@@ -40,7 +38,7 @@ class AddItem extends Component {
 
         const { token } = this.props;
 
-        const endpoint = link + 'collections/' + this.props.user.id + '/new/';
+        const endpoint = this.props.link + 'collections/' + this.props.user.id + '/new/';
         
         axios({
             method: 'POST',

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import LoginForm from './LoginForm';
-const url = 'http://localhost:3000/';
+
 class Login extends Component {
     constructor(props){
         super(props);
@@ -37,7 +36,7 @@ class Login extends Component {
 
         const { username, password } = this.state;
 
-        const endpoint = url + 'users/authenticate';
+        const endpoint = this.props.link + 'users/authenticate';
         axios.post(endpoint, {
             username, password
         })
@@ -53,7 +52,7 @@ class Login extends Component {
 
         const { email } = this.state;
 
-        const endpoint = url + 'users/forgot_password';
+        const endpoint = this.props.link + 'users/forgot_password';
         fetch(endpoint, {
             method: 'POST',
             body: JSON.stringify({ email })

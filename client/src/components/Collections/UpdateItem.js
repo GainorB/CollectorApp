@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import UpdateItemForm from './UpdateItemForm'
 
-const link = 'http://localhost:3000/';
-
 class UpdateItem extends Component {
     constructor(props){
         super(props);
@@ -32,7 +30,7 @@ class UpdateItem extends Component {
 
         const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = this.state;
         const post = { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image };
-        const endpoint = link + 'collections/' + userID + '/update/' + postID;
+        const endpoint = this.props.link + 'collections/' + userID + '/update/' + postID;
         
         axios({
             method: 'PUT',
