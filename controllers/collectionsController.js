@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 
 // CREATE A NEW ITEM
 router.post('/:id/new/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+
+    console.log(req.body)
     const userID = req.params.id;
     // EXTRACT FORM DATA
     const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = req.body;

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
+import dragula from 'react-dragula';
+import ReactDOM from 'react-dom';
+
 class Collection extends Component {
     constructor(props){
         super(props);
@@ -22,6 +25,9 @@ class Collection extends Component {
 
     componentDidMount(){
         this.props.fetchMyCollection(this.props.user.id, this.props.token);
+
+        var sneakers = ReactDOM.findDOMNode(this.refs.sneakers);
+        dragula([sneakers]);
     }
 
     handleClick(e){
@@ -56,6 +62,7 @@ class Collection extends Component {
     }
 
     handleReduce(e){
+        console.log(e.target);
         if(this.state.minimize === false){
             e.target.parentNode.querySelector('.minimizedTitle').innerHTML = e.target.parentNode.querySelector('img').getAttribute('alt');
             e.target.parentNode.style.height = '50px';
@@ -78,7 +85,7 @@ class Collection extends Component {
     renderCollection(){
         const { collection } = this.props;
         return (
-            <div className="wrapper container">
+            <div className="wrapper" ref="sneakers">
                 {collection.map((element, index) => {
                     return (
                             <div className="boxbox" key={index}>
