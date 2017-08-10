@@ -11,7 +11,6 @@ class Collection extends Component {
 
         this.state = {
             message: '',
-            minimize: false,
             mode: ''
         }
 
@@ -62,19 +61,18 @@ class Collection extends Component {
     }
 
     handleReduce(e){
-        console.log(e.target);
-        if(this.state.minimize === false){
+        if(e.target.getAttribute('class') === 'fa fa-minus'){
+            e.target.setAttribute('class', 'fa fa-plus');
             e.target.parentNode.querySelector('.minimizedTitle').innerHTML = e.target.parentNode.querySelector('img').getAttribute('alt');
             e.target.parentNode.style.height = '50px';
             e.target.parentNode.querySelector('img').style.display = 'none';
             e.target.parentNode.querySelector('.hidden').style.display = 'none';
-            this.setState({ minimize: !this.state.minimize });
         } else {
+            e.target.setAttribute('class', 'fa fa-minus');
             e.target.parentNode.querySelector('.minimizedTitle').innerHTML = '';
             e.target.parentNode.style.height = '';
             e.target.parentNode.querySelector('img').style.display = '';
             e.target.parentNode.querySelector('.hidden').style.display = '';
-            this.setState({ minimize: !this.state.minimize });
         }
     }
 
@@ -90,7 +88,7 @@ class Collection extends Component {
                     return (
                             <div className="boxbox" key={index}>
                                 <i className="fa fa-times" aria-hidden="true" onClick={() => this.handleDelete(element.id)}></i>
-                                {(this.state.minimize === false) ? <i className="fa fa-minus" aria-hidden="true" onClick={this.handleReduce} ></i> : <i className="fa fa-plus" aria-hidden="true" onClick={this.handleReduce} ></i>}
+                                <i className="fa fa-minus" aria-hidden="true" onClick={this.handleReduce} ></i>
                                 <p className="minimizedTitle"></p>
                                 <div><img id={index} src={element.image} alt={element.title} onClick={this.handleClick} /></div>
                                     <div className="hidden">
@@ -107,7 +105,6 @@ class Collection extends Component {
                                     </span>
                                     <Link className="updateCollection" to="/update" onClick={() => this.handleUpdate(element.id)}>Update {element.title}?</Link>
                                 </div>
-                                {/* <i className="fa fa-pencil" aria-hidden="true"}></i> */}
                             </div>
                         );
                     })}

@@ -393,6 +393,12 @@ img {
 /*
 * ADDITIONAL MEDIA QUERIES
 */
-@media (max-width: 800px){
-
+@media (max-width: 425px){
+    .wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        /* grid-gap: 1em; */
+        grid-auto-rows: minmax(100%, auto);
+    }
+    
 }
