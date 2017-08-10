@@ -2,7 +2,7 @@
 
 An application built for people to manage their sneaker collections! Simply make an account, from there you can submit your sneaker collection. Your collection will then be displayed in a grid, similar to Pinterest's layout. There is full CRUD functionality, you can create (adding a sneaker), read (view your collection), update (modify your collection) and delete (delete sneakers).
 
-**Live Link:** 
+**Live Link:** https://collectrapp.herokuapp.com/
 
 ### TECH STACK
 * React.js
