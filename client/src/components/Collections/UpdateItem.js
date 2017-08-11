@@ -29,7 +29,7 @@ class UpdateItem extends Component {
         const token = this.props.token;
 
         const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = this.state;
-        const endpoint = this.props.link + 'collections/' + userID + '/update/' + postID;
+        const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + userID + '/update/' + postID;
         
         axios({
             method: 'PUT',

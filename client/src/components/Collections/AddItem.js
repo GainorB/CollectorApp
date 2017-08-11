@@ -38,7 +38,7 @@ class AddItem extends Component {
 
         const { token } = this.props;
 
-        const endpoint = this.props.link + 'collections/' + this.props.user.id + '/new/';
+        const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + this.props.user.id + '/new/';
         
         axios({
             method: 'POST',

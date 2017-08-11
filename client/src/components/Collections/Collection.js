@@ -49,7 +49,7 @@ class Collection extends Component {
 
     handleDelete(id){
         const userID = this.props.user.id;
-        const endpoint = this.props.link + 'collections/' + userID + '/delete/' + id;
+        const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + userID + '/delete/' + id;
 
         axios.delete(endpoint, {
             headers: { Authorization: this.props.token },

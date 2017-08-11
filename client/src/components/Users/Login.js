@@ -36,7 +36,7 @@ class Login extends Component {
 
         const { username, password } = this.state;
 
-        const endpoint = this.props.link + 'users/authenticate';
+        const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/authenticate';
         axios.post(endpoint, {
             username, password
         })
@@ -52,7 +52,7 @@ class Login extends Component {
 
         const { email } = this.state;
 
-        const endpoint = this.props.link + 'users/forgot_password';
+        const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/forgot_password';
         fetch(endpoint, {
             method: 'POST',
             body: JSON.stringify({ email })

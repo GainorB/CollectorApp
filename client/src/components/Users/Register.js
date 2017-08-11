@@ -36,7 +36,7 @@ class Register extends Component {
 
         const { username, password, email } = this.state;
 
-        const endpoint = this.props.link + 'users/new';
+        const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/new';
         axios.post(endpoint, {
             username, email, password
         })

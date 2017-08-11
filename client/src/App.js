@@ -16,9 +16,8 @@ class App extends Component {
   constructor(){
     super();
 
-    // INITIAL STATE
     this.state = {
-      link: 'https://collectrapp-api.herokuapp.com/',
+      link: 'https://collectorapp-api.herokuapp.com/',
       user: null,
       isLoggedIn: false,
       token: null,
@@ -62,7 +61,7 @@ class App extends Component {
 
     this.setState({ itemToUpdate: id });
 
-    const endpoint = link + 'collections/' + user.id + '/update/info/' + id;
+    const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + user.id + '/update/info/' + id;
 
     axios({
       method: 'GET',
@@ -79,7 +78,7 @@ class App extends Component {
   // WHEN PAGE REFRESHES AND STATE IS LOST, WE FETCH THE PROFILE FROM LOCAL STORAGE
   fetchProfile(userID, token){
 
-    const endpoint = this.state.link + 'users/profile/' + userID;
+    const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/profile/' + userID;
 
     axios({
       method: 'GET',
@@ -105,7 +104,7 @@ class App extends Component {
 
   // FETCH MY COLLECTION FROM DATABASE
   fetchMyCollection(id, token){
-      const endpoint = this.state.link + `collections/mine/` + id;
+      const endpoint = 'https://collectorapp-api.herokuapp.com/' + `collections/mine/` + id;
       // const endpoint = this.state.link + 'collections/' + id + '/mine/';
       axios.get(endpoint, {
           headers: {
