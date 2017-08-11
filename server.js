@@ -6,14 +6,14 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const server = http.createServer(app);
 const port = process.env.PORT || '3000';
-const logger = require('morgan');
+//const logger = require('morgan');
 const passport = require('passport');
 
 const users = require('./routes/userRoutes');
 const collections = require('./routes/collectionRoutes');
 
 // MIDDLEWARE
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
