@@ -12,10 +12,6 @@ const passport = require('passport');
 const users = require('./routes/userRoutes');
 const collections = require('./routes/collectionRoutes');
 
-// VIEW ENGINE SETUP
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
 // MIDDLEWARE
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,16 +30,14 @@ app.all('/*', (req, res, next) => {
 });
 
 // SECURITY
-app.disable('x-powered-by');
+// app.disable('x-powered-by');
 
 // ROUTES
 users(app);
 collections(app);
 
 // LANDING PAGE
-app.get('/', (req, res, next) => {
-    res.send('Hello World');
-})
+app.get('/', (req, res, next) => res.send('Hello World'));
 
 // START SERVER
 app.set('port', port);
