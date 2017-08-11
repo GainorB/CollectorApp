@@ -45,11 +45,11 @@ server.listen(port);
 console.log('Server listening on port ' + port);
 
 // CATCH 404 AND FORWARD TO ERROR HANDLER
-app.use((req, res, next) => {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
+// app.use((req, res, next) => {
+//     var err = new Error('Not Found');
+//     err.status = 404;
+//     next(err);
+// });
 
 // ERROR HANDLER
 app.use((err, req, res, next) => {
