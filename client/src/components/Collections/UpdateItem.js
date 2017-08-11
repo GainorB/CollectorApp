@@ -29,13 +29,12 @@ class UpdateItem extends Component {
         const token = this.props.token;
 
         const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = this.state;
-        const post = { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image };
         const endpoint = this.props.link + 'collections/' + userID + '/update/' + postID;
         
         axios({
             method: 'PUT',
             url: endpoint,
-            data: { post },
+            data: { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image },
             headers: { 'Content-Type': 'application/json', 'Authorization': token }, 
         })
         .then(response => {

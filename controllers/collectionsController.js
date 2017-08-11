@@ -1,90 +1,65 @@
-const express = require('express');
-const router = express.Router();
 const Collections = require('../models/collections');
-
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-// CREATE A NEW ITEM
-router.post('/:id/new/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
 
-    console.log(req.body)
-    const userID = req.params.id;
-    // EXTRACT FORM DATA
-    const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = req.body;
+module.exports = {
 
-    // INSERT DATA INTO OBJECT
-    const newPost = { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image };
+    // CREATE NEW ITEM
+    NewItem(req, res, next){
+        // ERROR CHECKING
+        // if(Object.values(newPost).indexOf('') >= 0){
 
-    // ERROR CHECKING
-    // if(Object.values(newPost).indexOf('') >= 0){
+            // res.status(400).json({ success: false, message: 'Please fill in all fields' });
+        
+        // } else {
+            // ADD NEW POST
+            Collections.new(req.body, parseInt(req.params.id))
+                .then(post => { 
+                    res.status(201).json({ success: true, message: 'Post added successfully' });
+                })
+                .catch(err => {
+                    // console.error(err);
+                    res.status(400).json({ success: false, message: `Please fill in ${err.column}` }); 
+                });
+    },
 
-        // res.status(400).json({ success: false, message: 'Please fill in all fields' });
-    
-    // } else {
-        // ADD NEW POST
-        Collections.new(newPost, userID)
-            .then(post => { 
-                res.status(201).json({ success: true, message: 'Post added successfully' });
-            })
-            .catch(err => {
-                // console.error(err);
-                res.status(400).json({ success: false, message: `Please fill in ${err.column}` }); 
+    // GET ITEM TO UPDATE
+    GetItemToUpdate(req, res, next){
+        Collections.info(parseInt(req.params.id), parseInt(req.params.itemID))
+            .then(info => {
+                res.status(200).json({
+                    success: true,
+                    message: 'Item to update received',
+                    info
+                });
             });
-   // }
-});
+    },
 
-// GET ITEM TO UPDATES INFO
-router.get('/:id/update/info/:itemID', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    const userID = parseInt(req.params.id);
-    const itemID = parseInt(req.params.itemID);
-    Collections.info(userID, itemID)
-        .then(info => {
-            res.status(200).json({
-                success: true,
-                message: 'Item to update received',
-                info
+    // GET MY COLLECTION
+    MyCollection(req, res, next){
+        Collections.get(parseInt(req.params.id))
+            .then(collection => {
+                res.status(200).json({
+                    success: true,
+                    message: 'All posts received',
+                    collection
+                });
             });
-        });
-});
+    },
 
-// GET MY COLLECTION
-router.get('/mine/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    const userID = parseInt(req.params.id);
-    Collections.get(userID)
-        .then(collection => {
-            res.status(200).json({
-                success: true,
-                message: 'All posts received',
-                collection
-            });
-        });
-});
+    // UPDATE AN ITEM
+    UpdateItem(req, res, next){
+        Collections.edit(req.body, parseInt(req.params.userID), parseInt(req.params.postID))
+            .then(update => res.status(200).json({ success: true, message: 'Post updated' }))
+            .catch(err => res.status(400).json({ success: false, message: 'Post not updated' }));
+    },
 
-// UPDATE AN ITEM
-router.put('/:userID/update/:postID', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    const postID = parseInt(req.params.postID);
-    const userID = parseInt(req.params.userID);
+    // DELETE AN ITEM
+    DeleteItem(req, res, next){
+        Collections.delete(parseInt(req.params.userID), parseInt(req.params.id))
+            .then(() => res.status(200).json({ success: true, message: 'Post deleted' }))
+            .catch(() => res.status(400).json({ success: false, message: 'Post not deleted' }));
+    },
 
-    const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = req.body.post; 
-    
-    const updatedPost = { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image };
 
-    console.log(updatedPost);
-
-    Collections.edit(updatedPost, userID, postID)
-        .then(update => res.status(200).json({ success: true, message: 'Post updated' }))
-        .catch(err => res.status(400).json({ success: false, message: 'Post not updated' }));
-});
-
-// DELETE AN ITEM
-router.delete('/:userID/delete/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    const userID = parseInt(req.params.userID);
-    const postID = parseInt(req.params.id);
-
-    Collections.delete(userID, postID)
-        .then(() => res.status(200).json({ success: true, message: 'Post deleted' }))
-        .catch(() => res.status(400).json({ success: false, message: 'Post not deleted' }));
-});
-
-module.exports = router;
+}

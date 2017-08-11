@@ -18,7 +18,7 @@ class App extends Component {
 
     // INITIAL STATE
     this.state = {
-      link: 'http://localhost:3000/',
+      link: 'https://collectrapp-api.herokuapp.com/',
       user: null,
       isLoggedIn: false,
       token: null,

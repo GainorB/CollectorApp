@@ -9,6 +9,9 @@ const port = process.env.PORT || '3000';
 const logger = require('morgan');
 const passport = require('passport');
 
+const users = require('./routes/userRoutes');
+const collections = require('./routes/collectionRoutes');
+
 // VIEW ENGINE SETUP
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,9 +36,9 @@ app.all('/*', (req, res, next) => {
 // SECURITY
 app.disable('x-powered-by');
 
-// CONTROLLERS
-app.use('/users', require('./controllers/usersController'));
-app.use('/collections', require('./controllers/collectionsController'));
+// ROUTES
+users(app);
+collections(app);
 
 // LANDING PAGE
 app.get('/', (req, res, next) => {
