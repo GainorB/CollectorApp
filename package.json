@@ -19,9 +19,5 @@
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "pg-promise": "^6.3.5"
-  },
-  "devDependencies": {
-    "morgan": "^1.8.2",
-    "nodemon": "^1.11.0"
   }
 }
