@@ -10,8 +10,7 @@ class Collection extends Component {
         super(props);
 
         this.state = {
-            message: '',
-            mode: ''
+            message: ''
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -56,6 +55,7 @@ class Collection extends Component {
             headers: { Authorization: this.props.token },
         })
         .then(response => {
+            this.props.newCollectionData(response.data.collection);
             this.setState({ message: response.data.message });
         })
         .catch(err => console.error(err));

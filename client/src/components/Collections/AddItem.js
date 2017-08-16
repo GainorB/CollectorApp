@@ -21,12 +21,6 @@ class AddItem extends Component {
 
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.clearMessage = this.clearMessage.bind(this);
-    }
-
-    // RESET MESSAGES ON THE FORM
-    clearMessage(){
-        this.setState({ message: '' });
     }
 
     // HANDLE ADDING NEW ITEMS
@@ -51,7 +45,10 @@ class AddItem extends Component {
                 'Authorization': token
             }
         })
-        .then(res => this.setState({ message: res.data.message }))
+        .then(res => {
+            this.props.newCollectionData(res.data.collection);
+            this.setState({ message: res.data.message })
+        })
         .catch(err => console.log(err));
     }
 
@@ -67,6 +64,8 @@ class AddItem extends Component {
                 handleChange={this.handleChange}
                 clearMessage={this.clearMessage}
                 message={this.state.message}
+                image={this.state.image}
+                title={this.state.title}
             />
         );
     }

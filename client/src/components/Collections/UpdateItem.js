@@ -13,7 +13,7 @@ class UpdateItem extends Component {
             purchasedfor: undefined,
             purchasedfrom: undefined,
             worth: undefined,
-            image: undefined,
+            image: "http://via.placeholder.com/300x300",
             forsale: undefined,
             message: ''
         };
@@ -23,13 +23,7 @@ class UpdateItem extends Component {
         this.CheckForEmpty = this.CheckForEmpty.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
         this.checkStateForUndefineds = this.checkStateForUndefineds.bind(this);
-        this.clearMessage = this.clearMessage.bind(this);
         this.inputFlag = true;
-    }
-
-    // RESET MESSAGES ON THE FORM
-    clearMessage = () => {
-        this.setState({ message: '' });
     }
 
     // SETS THE DEFAULT VALUE IN THE INPUT FORM
@@ -70,7 +64,9 @@ class UpdateItem extends Component {
             data: { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image },
             headers: { 'Content-Type': 'application/json', 'Authorization': token }, 
         })
-        .then(res => this.setState({ message: res.data.message }))
+        .then(res => {
+            this.props.newCollectionData(res.data.collection);
+            this.setState({ message: res.data.message })})
         .catch(err => console.error(err));
     }
 
@@ -191,20 +187,22 @@ class UpdateItem extends Component {
                     
                     {(this.props.updatedItemInfo.worth === 0) ? <p></p> : <p><span className="tooltip">Worth ($)</span><br/><input type="number" ref="worth" name="worth" onBlur={this.handleChange} /></p> }
                     
-                    {(this.props.updatedItemInfo.image === '') ? <p></p> : 
                     <p>
                         <span className="tooltip">Current Image</span><br/>
                         <img src={this.props.updatedItemInfo.image} alt={this.props.updatedItemInfo.title} className="updateImage" /><br/><br/>
                         <span className="tooltip">New Image</span><br/>
                         <img src={this.state.image} alt={this.state.title} className="updateImage" /><br/>
                         <input type="url" ref="image" name="image" onBlur={this.handleChange} />
-                    </p> }
+                    </p>
                     
                     {(this.props.updatedItemInfo.forsale === '') ? <p></p> : 
                     <p><span className="tooltip">For Sale</span><br/>
-                    <input type="text" ref="forsale" name="forsale" onBlur={this.handleChange} />
+                    <select ref="forsale" name="forsale" onChange={this.handleChange}>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
                     </p> }
-                    <input type="submit" value="Update Item" /> <input type="reset" value="Reset" />
+                    <input type="submit" value="update Item" /> <input type="reset" value="reset" />
                 </form>
             </div>
         );

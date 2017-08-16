@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // COMPONENTS
@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Collection from './components/Collections/Collection';
 import AddItem from './components/Collections/AddItem';
 import UpdateItem from './components/Collections/UpdateItem'
+import Footer from './components/Footer';
 
 // CSS
 import './css/style.css';
@@ -41,6 +42,7 @@ class App extends Component {
     this.updateComponent = this.updateComponent.bind(this);
     this.updateAnItem = this.updateAnItem.bind(this);
     this.logOut = this.logOut.bind(this);
+    this.newCollectionData = this.newCollectionData.bind(this);
   }
 
   // GRAB TOKEN AND USERID FROM LOCALSTORAGE
@@ -57,7 +59,7 @@ class App extends Component {
   }
 
   // THIS FUNCTION GETS CALLED IN COLLECTION COMPONENT
-  // GETS PASSED AN IDEA, FROM THERE SETS STATE OF THE ITEM TO UPDATE
+  // GETS PASSED AN ID, FROM THERE SETS STATE OF THE ITEM TO UPDATE
   // FETCH THIS ITEM FROM DATABASE AND SEND IT TO UPDATE ITEM PAGE TO CHANGE DETAILS
   updateAnItem(id){
 
@@ -131,6 +133,10 @@ class App extends Component {
     this.setState({ user: null, isLoggedIn: false, token: null });
   }
 
+  newCollectionData(data){
+    return this.setState({ collection: data });
+  }
+
   // MY
   collectionComponent(){
     const { token, isLoggedIn, user, collection, link } = this.state;
@@ -143,6 +149,7 @@ class App extends Component {
         fetchMyCollection={this.fetchMyCollection}
         collection={collection}
         updateAnItem={this.updateAnItem}
+        newCollectionData={this.newCollectionData}
       />
     );
   }
@@ -190,6 +197,7 @@ class App extends Component {
         isLoggedIn={isLoggedIn}
         token={token}
         user={user}
+        newCollectionData={this.newCollectionData}
       />
     );
   }
@@ -205,6 +213,7 @@ class App extends Component {
         user={user}
         itemToUpdate={itemToUpdate}
         updatedItemInfo={updatedItemInfo}
+        newCollectionData={this.newCollectionData}
       />  
     );
   }
@@ -240,7 +249,7 @@ class App extends Component {
   // ERROR PAGE
   NoMatch({location}){
     return (
-      <h3>No match for <code>{location.pathname}</code></h3>
+      <h3>No match for <code>{location.pathname}</code><br/><br/>Return <Link to="/">home.</Link></h3>
     );
   }
 
@@ -259,6 +268,7 @@ class App extends Component {
               <Route path="/update" render={() => this.requireAuth("/update")} />
               <Route component={this.NoMatch}/>
             </Switch>
+            <Footer />
           </div>
         </Router>
       );
