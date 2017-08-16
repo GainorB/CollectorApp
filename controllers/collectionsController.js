@@ -14,8 +14,12 @@ module.exports = {
         // } else {
             // ADD NEW POST
             Collections.new(req.body, parseInt(req.params.id))
-                .then(post => { 
-                    res.status(201).json({ success: true, message: 'Post added successfully' });
+                .then(post => {
+                    
+                    Collections.get(parseInt(req.params.id))
+                        .then(collection => {
+                            res.status(201).json({ collection, success: true, message: 'Post added successfully' });
+                        });
                 })
                 .catch(err => {
                     // console.error(err);
@@ -50,14 +54,24 @@ module.exports = {
     // UPDATE AN ITEM
     UpdateItem(req, res, next){
         Collections.edit(req.body, parseInt(req.params.userID), parseInt(req.params.postID))
-            .then(update => res.status(200).json({ success: true, message: 'Post updated' }))
+            .then(update => {
+                Collections.get(parseInt(req.params.userID))
+                    .then(collection => {
+                        res.status(200).json({ collection, success: true, message: 'Post updated' });
+                    });
+            })
             .catch(err => res.status(400).json({ success: false, message: 'Post not updated' }));
     },
 
     // DELETE AN ITEM
     DeleteItem(req, res, next){
         Collections.delete(parseInt(req.params.userID), parseInt(req.params.id))
-            .then(() => res.status(200).json({ success: true, message: 'Post deleted' }))
+            .then(() => {
+                Collections.get(parseInt(req.params.userID))
+                    .then(collection => {
+                        res.status(200).json({ collection, success: true, message: 'Post deleted' });
+                    });
+            })
             .catch(() => res.status(400).json({ success: false, message: 'Post not deleted' }));
     },
 
