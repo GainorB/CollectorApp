@@ -49,6 +49,7 @@ class Collection extends Component {
 
     handleDelete(id){
         const userID = this.props.user.id;
+        // eslint-disable-next-line
         const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + userID + '/delete/' + id;
 
         axios.delete(endpoint, {
@@ -103,7 +104,7 @@ class Collection extends Component {
                                     {(element.forsale === '') ? <p></p> : <p>For Sale? <strong>{element.forsale}</strong></p> }
                                     <br/><p><span className="cDate">{element.date_added}</span></p>
                                     </span>
-                                    <Link className="updateCollection" to="/update" onClick={() => this.handleUpdate(element.id)}>Update {element.title}?</Link>
+                                    <Link className="updateCollection" to="/update" onClick={() => this.handleUpdate(element.id)}>Update {element.brand} {element.title}?</Link>
                                 </div>
                             </div>
                         );

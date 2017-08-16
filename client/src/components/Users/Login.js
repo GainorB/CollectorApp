@@ -35,7 +35,7 @@ class Login extends Component {
         e.preventDefault();
 
         const { username, password } = this.state;
-
+        // eslint-disable-next-line
         const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/authenticate';
         axios.post(endpoint, {
             username, password
@@ -51,7 +51,7 @@ class Login extends Component {
         e.preventDefault();
 
         const { email } = this.state;
-
+        // eslint-disable-next-line
         const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/forgot_password';
         fetch(endpoint, {
             method: 'POST',

@@ -35,7 +35,7 @@ class Register extends Component {
         e.preventDefault();
 
         const { username, password, email } = this.state;
-
+        // eslint-disable-next-line
         const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/new';
         axios.post(endpoint, {
             username, email, password

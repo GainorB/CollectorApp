@@ -33,11 +33,10 @@ class AddItem extends Component {
     handleNewItem(e){
         e.preventDefault();
 
-        const { brand, title, condition, size, purchasedfor, purchasedfrom,
-                worth, forsale, image } = this.state;
+        const { brand, title, condition, size, purchasedfor, purchasedfrom, worth, forsale, image } = this.state;
 
         const { token } = this.props;
-
+        // eslint-disable-next-line
         const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + this.props.user.id + '/new/';
         
         axios({

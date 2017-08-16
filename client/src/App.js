@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
+// COMPONENTS
 import Login from './components/Users/Login';
 import Register from './components/Users/Register';
 import Home from './components/Home';
@@ -10,6 +11,7 @@ import Collection from './components/Collections/Collection';
 import AddItem from './components/Collections/AddItem';
 import UpdateItem from './components/Collections/UpdateItem'
 
+// CSS
 import './css/style.css';
 
 class App extends Component {
@@ -46,6 +48,8 @@ class App extends Component {
   componentDidMount(){
     let token = localStorage.getItem('collectionApp-token');
     let userID = localStorage.getItem('collectionApp-userID');
+
+    // IF TOKEN EXISTS
     if(token){
       this.setState({ token, isLoggedIn: true });
       this.fetchProfile(userID, token);
@@ -57,10 +61,10 @@ class App extends Component {
   // FETCH THIS ITEM FROM DATABASE AND SEND IT TO UPDATE ITEM PAGE TO CHANGE DETAILS
   updateAnItem(id){
 
-    const { token, user, link } = this.state;
+    const { token, user } = this.state;
 
     this.setState({ itemToUpdate: id });
-
+    // eslint-disable-next-line
     const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + user.id + '/update/info/' + id;
 
     axios({
@@ -77,7 +81,7 @@ class App extends Component {
   // FETCH PROFILE FROM LOCAL STORAGE
   // WHEN PAGE REFRESHES AND STATE IS LOST, WE FETCH THE PROFILE FROM LOCAL STORAGE
   fetchProfile(userID, token){
-
+    // eslint-disable-next-line
     const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/profile/' + userID;
 
     axios({
@@ -104,6 +108,7 @@ class App extends Component {
 
   // FETCH MY COLLECTION FROM DATABASE
   fetchMyCollection(id, token){
+      // eslint-disable-next-line
       const endpoint = 'https://collectorapp-api.herokuapp.com/' + `collections/mine/` + id;
       // const endpoint = this.state.link + 'collections/' + id + '/mine/';
       axios.get(endpoint, {
