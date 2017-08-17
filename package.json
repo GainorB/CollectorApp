@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "test": "NODE_ENV=test nodemon --exec 'mocha --recursive -R min'"
   },
   "author": "Gainor Bostwick",
   "license": "ISC",

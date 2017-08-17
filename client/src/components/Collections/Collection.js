@@ -20,6 +20,7 @@ class Collection extends Component {
 
         var sneakers = ReactDOM.findDOMNode(this.refs.sneakers);
         dragula([sneakers]);
+        this.props.clearMessage();
     }
 
     handleClick(e){
@@ -67,34 +68,42 @@ class Collection extends Component {
 
     renderCollection(){
         const { collection } = this.props;
-        return (
-            <div className="wrapper" ref="sneakers">
-                {collection.map((element, index) => {
-                    return (
-                            <div className="boxbox" key={index}>
-                                <i className="fa fa-times" aria-hidden="true" onClick={() => this.props.handleDelete(element.id)}></i>
-                                <i className="fa fa-minus" aria-hidden="true" onClick={this.handleReduce} ></i>
-                                <p className="minimizedTitle"></p>
-                                <div><img id={index} src={element.image} alt={element.title} onClick={this.handleClick} /></div>
-                                    <div className="hidden">
-                                    <p><span className="cTitle">{element.brand} {element.title}</span></p><br/>
-                                    <span className="cInfo">
-                                    <p>Condition: {element.condition}/<strong>10</strong></p>
-                                    <p>Size: <strong>{element.size}</strong></p>
-                                    
-                                    {(element.purchasedfor === 0) ? <p></p> : <p>Purchased For: <strong>${element.purchasedfor}</strong></p> }
-                                    {(element.purchasedfrom === '') ? <p></p> : <p>Purchased From: <strong>{element.purchasedfrom}</strong></p> }
-                                    {(element.worth === 0) ? <p></p> : <p>Worth? <strong>${element.worth}</strong></p> }
-                                    {(element.forsale === '') ? <p></p> : <p>For Sale? <strong>{element.forsale}</strong></p> }
-                                    <br/><p><span className="cDate">{element.date_added}</span></p>
-                                    </span>
-                                    <Link className="updateCollection" to="/update" onClick={() => this.handleUpdate(element.id)}>Update {element.brand} {element.title}?</Link>
+        if(this.props.apiDataLoaded === true) {
+            return (
+                <div className="wrapper" ref="sneakers">
+                    {collection.map((element, index) => {
+                        return (
+                                <div className="boxbox" key={index}>
+                                    <i className="fa fa-times" aria-hidden="true" onClick={() => this.props.handleDelete(element.id)}></i>
+                                    <i className="fa fa-minus" aria-hidden="true" onClick={this.handleReduce} ></i>
+                                    <p className="minimizedTitle"></p>
+                                    <div><img id={index} src={element.image} alt={element.title} onClick={this.handleClick} /></div>
+                                        <div className="hidden">
+                                        <p><span className="cTitle">{element.brand} {element.title}</span></p><br/>
+                                        <span className="cInfo">
+                                        <p>Condition: {element.condition}/<strong>10</strong></p>
+                                        <p>Size: <strong>{element.size}</strong></p>
+                                        
+                                        {(element.purchasedfor === 0) ? <p></p> : <p>Purchased For: <strong>${element.purchasedfor}</strong></p> }
+                                        {(element.purchasedfrom === '') ? <p></p> : <p>Purchased From: <strong>{element.purchasedfrom}</strong></p> }
+                                        {(element.worth === 0) ? <p></p> : <p>Worth? <strong>${element.worth}</strong></p> }
+                                        {(element.forsale === '') ? <p></p> : <p>For Sale? <strong>{element.forsale}</strong></p> }
+                                        <br/><p><span className="cDate">{element.date_added}</span></p>
+                                        </span>
+                                        <Link className="updateCollection" to="/update" onClick={() => this.handleUpdate(element.id)}>Update {element.brand} {element.title}?</Link>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-            </div>
-        );
+                            );
+                        })}
+                </div>
+            );
+        } else {
+            return (
+                <div className="loading">
+                    <img src="https://s-media-cache-ak0.pinimg.com/originals/a3/dd/08/a3dd083f4e57a8629e1e9de3a9f5a630.gif" alt="Loading"/>
+                </div>
+            );
+        }
     }
 
     render(){

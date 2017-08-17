@@ -163,7 +163,12 @@ a:hover {
 
 /*
 * COLLECTIONS
-*/ 
+*/
+
+.loading {
+    text-align: center;
+    border: 1px solid #312842;
+}
 
 .wrapper {
     display: flex;

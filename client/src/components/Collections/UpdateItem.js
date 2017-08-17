@@ -67,7 +67,7 @@ class UpdateItem extends Component {
             headers: { 'Content-Type': 'application/json', 'Authorization': token }, 
         })
         .then(res => {
-            this.props.newCollectionData(res.data.collection);
+            this.props.newCollectionData(this.props.shuffle(res.data.collection));
             this.setState({ message: res.data.message })})
         .catch(err => console.error(err));
     }

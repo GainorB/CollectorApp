@@ -20,41 +20,48 @@ class App extends Component {
     super();
 
     this.state = {
-      link: 'https://collectorapp-api.herokuapp.com/',
       user: null,
       isLoggedIn: false,
       token: null,
       collection: [],
       itemToUpdate: 0,
       updatedItemInfo: {},
-      message: ''
+      message: '',
+      apiDataLoaded: false
     }
 
     // BINDING
     this.setUser = this.setUser.bind(this);
     this.requireAuth = this.requireAuth.bind(this);
-    this.collectionComponent = this.collectionComponent.bind(this);
-    this.homeComponent = this.homeComponent.bind(this);
-    this.loginComponent = this.loginComponent.bind(this);
-    this.newComponent = this.newComponent.bind(this);
     this.fetchProfile = this.fetchProfile.bind(this);
     this.fetchMyCollection = this.fetchMyCollection.bind(this);
-    this.addComponent = this.addComponent.bind(this);
-    this.updateComponent = this.updateComponent.bind(this);
     this.updateAnItem = this.updateAnItem.bind(this);
     this.logOut = this.logOut.bind(this);
     this.newCollectionData = this.newCollectionData.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.clearMessage = this.clearMessage.bind(this);
+
+    // components
+    this.collectionComponent = this.collectionComponent.bind(this);
+    this.loginComponent = this.loginComponent.bind(this);
+    this.newComponent = this.newComponent.bind(this);
+    this.addComponent = this.addComponent.bind(this);
+    this.updateComponent = this.updateComponent.bind(this);
   }
 
-  // RESET MESSAGES ON THE FORM
+  /**
+   * Clears the status message from state
+   * @memberof App
+   */
   clearMessage = () => {
     this.setState({ message: '' });
   }
 
-  // GRAB TOKEN AND USERID FROM LOCALSTORAGE
-  // IF TOKEN IS AVAILABLE SET STATE (LOG IN THE USER), THEN FETCH PROFILE INFO
+  /**
+   * When component mounts grab token and userid from Local Storage
+   * If token and userid exists, log the user in
+   * @memberof App
+   */
   componentDidMount(){
     let token = localStorage.getItem('collectionApp-token');
     let userID = localStorage.getItem('collectionApp-userID');
@@ -66,9 +73,12 @@ class App extends Component {
     }
   }
 
-  // THIS FUNCTION GETS CALLED IN COLLECTION COMPONENT
-  // GETS PASSED AN ID, FROM THERE SETS STATE OF THE ITEM TO UPDATE
-  // FETCH THIS ITEM FROM DATABASE AND SEND IT TO UPDATE ITEM PAGE TO CHANGE DETAILS
+  /**
+   * This function gets called in Collection.js
+   * Gets passed an id, sets state with this id
+   * Fetch this item from the database and send it to the update item page
+   * @param  {integer} id - the ID of the item to update
+   */
   updateAnItem(id){
 
     const { token, user } = this.state;
@@ -88,8 +98,12 @@ class App extends Component {
     .catch(err => console.error(err));
   }
 
-  // FETCH PROFILE FROM LOCAL STORAGE
-  // WHEN PAGE REFRESHES AND STATE IS LOST, WE FETCH THE PROFILE FROM LOCAL STORAGE
+  /**
+   * Fetches users profile
+   * @param {integer} userID - id of the user
+   * @param {integer} token 
+   * @memberof App
+   */
   fetchProfile(userID, token){
     // eslint-disable-next-line
     const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'users/profile/' + userID;
@@ -106,17 +120,29 @@ class App extends Component {
       .catch(err => console.error(err));
   }
 
-  // ONCE A USER LOGS IN
-  // ADD TOKEN AND USERID TO LOCAL STORAGE
+  /**
+   * This function is called when a user logs in
+   * Sets two variables in LocalStorage
+   * @param {object} user - contains user profile information
+   * @memberof App
+   */
   setUser(user){
-    localStorage.setItem('collectionApp-token', user.data.token);
-    localStorage.setItem('collectionApp-userID', user.data.user.id);
+    const userID = user.data.user.id;
+    const token = user.data.token;
+
+    localStorage.setItem('collectionApp-token', token);
+    localStorage.setItem('collectionApp-userID', userID);
     // FETCH COLLECTION
-    this.fetchMyCollection(user.data.user.id, user.data.token);
-    this.setState({ user: user.data.user, isLoggedIn: true, token: user.data.token });
+    this.fetchMyCollection(userID, token);
+    this.setState({ user: user.data.user, isLoggedIn: true, token });
   }
 
-  // FETCH MY COLLECTION FROM DATABASE
+  /**
+   * Fetch user collection from database
+   * @param {integer} id - userid
+   * @param {integer} token 
+   * @memberof App
+   */
   fetchMyCollection(id, token){
       // eslint-disable-next-line
       const endpoint = 'https://collectorapp-api.herokuapp.com/' + `collections/mine/` + id;
@@ -127,12 +153,16 @@ class App extends Component {
           }
       })
       .then(collection => {
-          this.setState({ collection: collection.data.collection });
+          this.setState({ collection: this.shuffle(collection.data.collection), apiDataLoaded: true });
       })
       .catch(err => console.error(err));
   }
 
-  // DELETE A SNEAKER
+  /**
+   * Delete a sneaker from collection
+   * @param {integer} id  - id of sneaker to delete
+   * @memberof App
+   */
   handleDelete(id){
       const userID = this.state.user.id;
       // eslint-disable-next-line
@@ -142,14 +172,16 @@ class App extends Component {
           headers: { Authorization: this.state.token },
       })
       .then(response => {
-          this.newCollectionData(response.data.collection);
+          this.newCollectionData(this.shuffle(response.data.collection));
           this.setState({ message: response.data.message });
       })
       .catch(err => console.error(err));
   }
 
-  // USER LOGS OUT
-  // REMOVE TOKEN AND USERID FROM LOCAL STORAGE
+  /**
+   * Logout an user by clearing LocalStorage
+   * @memberof App
+   */
   logOut(){
     localStorage.removeItem('collectionApp-token');
     localStorage.removeItem('collectionApp-userID');
@@ -157,16 +189,44 @@ class App extends Component {
     this.setState({ user: null, isLoggedIn: false, token: null });
   }
 
-  newCollectionData(data){
-    return this.setState({ collection: data });
+
+  /**
+   * Helper function used to shuffle sneakers
+   * @param {any} sneakers - array of objects
+   * @returns a shuffled array of sneakers
+   * @memberof App
+   */
+  shuffle(sneakers) {
+    let length = sneakers.length;
+    let last;
+    let random;
+
+    while (length) {
+      random = Math.floor(Math.random() * (length -= 1));
+      last = sneakers[length];
+      sneakers[length] = sneakers[random];
+      sneakers[random] = last;
+    }
+    return sneakers;
   }
 
-  // MY
+  /**
+   * When an action is taken on a users collection, we update their collection with new data
+   * @param {any} data - object received from axios database request, containing an array of objects
+   * @memberof App
+   */
+  newCollectionData(data){
+    return this.setState({ collection: this.shuffle(data) });
+  }
+
+  /**
+   * Pass props down to collection component
+   * @memberof App
+   */
   collectionComponent(){
-    const { token, user, collection, link, message } = this.state;
+    const { token, user, collection, message } = this.state;
     return (
       <Collection
-        link={link}
         token={token}
         user={user}
         fetchMyCollection={this.fetchMyCollection}
@@ -175,51 +235,43 @@ class App extends Component {
         handleDelete={this.handleDelete}
         message={message}
         clearMessage={this.clearMessage}
+        apiDataLoaded={this.state.apiDataLoaded}
       />
     );
   }
 
-  // HOME
-  homeComponent(){
-    const { token, isLoggedIn, user, link } = this.state;
-    return (
-      <Home
-        link={link} 
-        isLoggedIn={isLoggedIn}
-        token={token}
-        user={user}
-        fetchProfile={this.fetchProfile}
-      />
-    );
-  }
-
-  // REGISTER
+  /**
+   * Pass props down to register component
+   * @memberof App
+   */
   newComponent(){
     return (
       <Register
-        link={this.state.link} 
         setUser={this.setUser}
       />
     );
   }
 
-  // LOGIN
+  /**
+   * Pass props down to login component
+   * @memberof App
+   */
   loginComponent(){
     return (
       <Login
-        link={this.state.link} 
         setUser={this.setUser}
       />
     );
   }
 
-  // ADD ITEM
+  /**
+   * Pass props down to add item component
+   * @memberof App
+   */
   addComponent(){
-    const { token, isLoggedIn, user, link } = this.state;
+    const { token, user } = this.state;
     return (
     <AddItem
-        link={link} 
-        isLoggedIn={isLoggedIn}
         token={token}
         user={user}
         newCollectionData={this.newCollectionData}
@@ -227,23 +279,29 @@ class App extends Component {
     );
   }
 
-  // UPDATE ITEM
+  /**
+   * Pass props down to update item component
+   * @memberof App
+   */
   updateComponent(){
-    const { token, isLoggedIn, user, updatedItemInfo, itemToUpdate, link } = this.state;
+    const { token, user, updatedItemInfo, itemToUpdate } = this.state;
     return (
     <UpdateItem
-        link={link} 
-        isLoggedIn={isLoggedIn}
         token={token}
         user={user}
         itemToUpdate={itemToUpdate}
         updatedItemInfo={updatedItemInfo}
         newCollectionData={this.newCollectionData}
+        shuffle={this.shuffle}
       />  
     );
   }
 
-  // CHECK IF USER IS AUTHENTICATED
+  /**
+   * Checks if the user is logged in by checking the route path
+   * @param {string} path - the route the user is trying to go to
+   * @memberof App
+   */
   requireAuth(path){
     const { token, isLoggedIn } = this.state;
     if(isLoggedIn === true || token){
@@ -271,7 +329,11 @@ class App extends Component {
     }
   }
 
-  // ERROR PAGE
+  /**
+   * Error page
+   * @param {any} {location} 
+   * @memberof App
+   */
   NoMatch({location}){
     return (
       <h3>No match for <code>{location.pathname}</code><br/><br/>Return <Link to="/">home.</Link></h3>
@@ -285,7 +347,7 @@ class App extends Component {
           <div>
             <Navbar token={token} isLoggedIn={isLoggedIn} itemToUpdate={itemToUpdate} logOut={this.logOut} />
             <Switch>
-              <Route exact path="/" render={() => this.homeComponent()} />
+              <Route exact path="/" component={Home} />
               <Route path="/new" render={() => this.requireAuth("/new")} />
               <Route path="/login" render={() => this.requireAuth("/login")} />
               <Route path="/my" render={() => this.requireAuth("/my")} /> 
