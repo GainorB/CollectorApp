@@ -57,12 +57,22 @@ class AddItem extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    // preventNeg = () => {
+    //     // PREVENT NEGATIVE NUMBERS IN THE NUMBER INPUT
+    //     document.querySelector('#size').addEventListener('keydown', function(e){
+    //         if(!((e.keyCode > 95 && e.keyCode < 106)
+    //         || (e.keyCode > 47 && e.keyCode < 58) 
+    //         || e.keyCode == 8)) {
+    //             return false;
+    //         }
+    //     });
+    // }
+
     render(){
         return (
             <AddItemForm 
                 handleNewItem={this.handleNewItem}
                 handleChange={this.handleChange}
-                clearMessage={this.clearMessage}
                 message={this.state.message}
                 image={this.state.image}
                 title={this.state.title}

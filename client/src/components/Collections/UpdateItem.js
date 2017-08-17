@@ -13,7 +13,7 @@ class UpdateItem extends Component {
             purchasedfor: undefined,
             purchasedfrom: undefined,
             worth: undefined,
-            image: "http://via.placeholder.com/300x300",
+            image: undefined,
             forsale: undefined,
             message: ''
         };
@@ -36,12 +36,14 @@ class UpdateItem extends Component {
             this.refs.title.value = title;
             this.refs.condition.value = condition;
             this.refs.size.value = size;
-            this.refs.purchasedfor.value = purchasedfor;
-            this.refs.purchasedfrom.value = purchasedfrom;
-            this.refs.worth.value = worth;
             this.refs.image.value = image;
-            this.refs.forsale.value = forsale;
-            this.checkStateForUndefineds();
+
+        if(this.props.updatedItemInfo.purchasedfor !== 0) this.refs.purchasedfor.value = purchasedfor;
+        if(this.props.updatedItemInfo.purchasedfrom !== '') this.refs.purchasedfrom.value = purchasedfrom;
+        if(this.props.updatedItemInfo.worth !== 0) this.refs.worth.value = worth;
+        if(this.props.updatedItemInfo.forsale !== '') this.refs.forsale.value = forsale;
+        
+        this.checkStateForUndefineds();
 	    }
     }
 
@@ -115,36 +117,46 @@ class UpdateItem extends Component {
             this.setState({ size });
         }
 
-        if(this.refs.purchasedfor.value === ''){ 
-            this.refs.purchasedfor.value = purchasedfor;
-            this.setState({ purchasedfor });
-        }
-
-        if(this.refs.purchasedfrom.value === ''){
-            this.refs.purchasedfrom.value = purchasedfrom;
-            this.setState({ purchasedfrom }); 
-        }
-
-        if(this.refs.worth.value === ''){
-            this.refs.worth.value = worth;
-            this.setState({ worth });
-        }
-
         if(this.refs.image.value === ''){
             this.refs.image.value = image; 
             this.setState({ image });
         }
 
-        if(this.refs.forsale.value === ''){
-            this.refs.forsale.value = forsale;
-            this.setState({ forsale });
+        // optional
+
+        if(this.props.updatedItemInfo.purchasedfor !== 0) {
+            if(this.refs.purchasedfor.value === ''){ 
+                this.refs.purchasedfor.value = purchasedfor;
+                this.setState({ purchasedfor });
+            }
+        }
+
+        if(this.props.updatedItemInfo.purchasedfrom !== ''){
+            if(this.refs.purchasedfrom.value === ''){
+                this.refs.purchasedfrom.value = purchasedfrom;
+                this.setState({ purchasedfrom }); 
+            }
+        }
+
+        if(this.props.updatedItemInfo.worth !== 0){
+            if(this.refs.worth.value === ''){
+                this.refs.worth.value = worth;
+                this.setState({ worth });
+            }
+        }
+
+        if(this.props.updatedItemInfo.forsale !== ''){
+            if(this.refs.forsale.value === ''){
+                this.refs.forsale.value = forsale;
+                this.setState({ forsale });
+            }
         }
     }
     
     render(){
         return (
             <div className="updateWrapper">
-                <p className="formTitle">Use this form to update your sneakers information.</p>
+                <p className="formTitle">Update sneaker</p>
                 <p className="formSubTitle">Whichever field isn't updated or left blank will default to its original value.</p>
                 <p className="formMessage" style={{ display: this.state.message !== '' ? "block" : "none" }}>{this.state.message}</p>
                 <form onSubmit={this.handleUpdate}>
@@ -156,7 +168,7 @@ class UpdateItem extends Component {
                         onBlur={this.handleChange}
                         /></p>
 
-                    <p><span className="tooltip">Title</span><br/>
+                    <p><span className="tooltip">Name</span><br/>
                     <input type="text" 
                         ref="title"
                         name="title"
@@ -202,7 +214,7 @@ class UpdateItem extends Component {
                         <option value="No">No</option>
                     </select>
                     </p> }
-                    <input type="submit" value="update Item" /> <input type="reset" value="reset" />
+                    <input type="submit" value="update" /> <input type="reset" value="reset" />
                 </form>
             </div>
         );

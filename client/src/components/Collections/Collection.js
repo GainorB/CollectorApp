@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom'
 
 import dragula from 'react-dragula';
@@ -9,14 +8,9 @@ class Collection extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            message: ''
-        }
-
         this.handleClick = this.handleClick.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.renderCollection = this.renderCollection.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
         this.handleReduce = this.handleReduce.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
     }
@@ -30,6 +24,7 @@ class Collection extends Component {
 
     handleClick(e){
         document.querySelectorAll('.hidden')[e.target.id].classList.toggle('show');
+        this.props.clearMessage();
     }
 
     handleSearch(e){
@@ -44,21 +39,8 @@ class Collection extends Component {
                 titles[i].parentNode.parentNode.parentNode.style.display = 'none';
             }
         }
-    }
 
-    handleDelete(id){
-        const userID = this.props.user.id;
-        // eslint-disable-next-line
-        const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + userID + '/delete/' + id;
-
-        axios.delete(endpoint, {
-            headers: { Authorization: this.props.token },
-        })
-        .then(response => {
-            this.props.newCollectionData(response.data.collection);
-            this.setState({ message: response.data.message });
-        })
-        .catch(err => console.error(err));
+        this.props.clearMessage();
     }
 
     handleReduce(e){
@@ -75,6 +57,8 @@ class Collection extends Component {
             e.target.parentNode.querySelector('img').style.display = '';
             e.target.parentNode.querySelector('.hidden').style.display = '';
         }
+
+        this.props.clearMessage();
     }
 
     handleUpdate(id){
@@ -88,7 +72,7 @@ class Collection extends Component {
                 {collection.map((element, index) => {
                     return (
                             <div className="boxbox" key={index}>
-                                <i className="fa fa-times" aria-hidden="true" onClick={() => this.handleDelete(element.id)}></i>
+                                <i className="fa fa-times" aria-hidden="true" onClick={() => this.props.handleDelete(element.id)}></i>
                                 <i className="fa fa-minus" aria-hidden="true" onClick={this.handleReduce} ></i>
                                 <p className="minimizedTitle"></p>
                                 <div><img id={index} src={element.image} alt={element.title} onClick={this.handleClick} /></div>
@@ -117,7 +101,7 @@ class Collection extends Component {
         return (
             <div className="collectionPage">
                 <p className="search"><input type="text" name="search" placeholder="Search" onChange={this.handleSearch} /></p>
-                <p className="formMessage" style={{ display: this.state.message !== '' ? "block" : "none" }}>{this.state.message}</p>
+                <p className="formMessage" style={{ display: this.props.message !== '' ? "block" : "none" }}>{this.props.message}</p>
                 {this.renderCollection()}
             </div>
         );

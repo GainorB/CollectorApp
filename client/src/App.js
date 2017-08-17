@@ -26,7 +26,8 @@ class App extends Component {
       token: null,
       collection: [],
       itemToUpdate: 0,
-      updatedItemInfo: {}
+      updatedItemInfo: {},
+      message: ''
     }
 
     // BINDING
@@ -43,6 +44,13 @@ class App extends Component {
     this.updateAnItem = this.updateAnItem.bind(this);
     this.logOut = this.logOut.bind(this);
     this.newCollectionData = this.newCollectionData.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.clearMessage = this.clearMessage.bind(this);
+  }
+
+  // RESET MESSAGES ON THE FORM
+  clearMessage = () => {
+    this.setState({ message: '' });
   }
 
   // GRAB TOKEN AND USERID FROM LOCALSTORAGE
@@ -124,6 +132,22 @@ class App extends Component {
       .catch(err => console.error(err));
   }
 
+  // DELETE A SNEAKER
+  handleDelete(id){
+      const userID = this.state.user.id;
+      // eslint-disable-next-line
+      const endpoint = 'https://collectorapp-api.herokuapp.com/' + 'collections/' + userID + '/delete/' + id;
+
+      axios.delete(endpoint, {
+          headers: { Authorization: this.state.token },
+      })
+      .then(response => {
+          this.newCollectionData(response.data.collection);
+          this.setState({ message: response.data.message });
+      })
+      .catch(err => console.error(err));
+  }
+
   // USER LOGS OUT
   // REMOVE TOKEN AND USERID FROM LOCAL STORAGE
   logOut(){
@@ -139,17 +163,18 @@ class App extends Component {
 
   // MY
   collectionComponent(){
-    const { token, isLoggedIn, user, collection, link } = this.state;
+    const { token, user, collection, link, message } = this.state;
     return (
       <Collection
         link={link}
-        isLoggedIn={isLoggedIn}
         token={token}
         user={user}
         fetchMyCollection={this.fetchMyCollection}
         collection={collection}
         updateAnItem={this.updateAnItem}
-        newCollectionData={this.newCollectionData}
+        handleDelete={this.handleDelete}
+        message={message}
+        clearMessage={this.clearMessage}
       />
     );
   }

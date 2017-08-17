@@ -18,7 +18,7 @@ module.exports = {
                     
                     Collections.get(parseInt(req.params.id))
                         .then(collection => {
-                            res.status(201).json({ collection, success: true, message: 'Post added successfully' });
+                            res.status(201).json({ collection, success: true, message: 'Sneaker added successfully' });
                         });
                 })
                 .catch(err => {
@@ -33,7 +33,7 @@ module.exports = {
             .then(info => {
                 res.status(200).json({
                     success: true,
-                    message: 'Item to update received',
+                    message: 'Sneaker to update received',
                     info
                 });
             });
@@ -57,10 +57,10 @@ module.exports = {
             .then(update => {
                 Collections.get(parseInt(req.params.userID))
                     .then(collection => {
-                        res.status(200).json({ collection, success: true, message: 'Post updated' });
+                        res.status(200).json({ collection, success: true, message: 'Sneaker updated' });
                     });
             })
-            .catch(err => res.status(400).json({ success: false, message: 'Post not updated' }));
+            .catch(err => res.status(400).json({ success: false, message: 'Sneaker not updated' }));
     },
 
     // DELETE AN ITEM
@@ -69,10 +69,10 @@ module.exports = {
             .then(() => {
                 Collections.get(parseInt(req.params.userID))
                     .then(collection => {
-                        res.status(200).json({ collection, success: true, message: 'Post deleted' });
+                        res.status(200).json({ collection, success: true, message: 'Sneaker deleted' });
                     });
             })
-            .catch(() => res.status(400).json({ success: false, message: 'Post not deleted' }));
+            .catch(() => res.status(400).json({ success: false, message: 'Sneaker not deleted' }));
     },
 
 
