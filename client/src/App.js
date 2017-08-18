@@ -176,6 +176,8 @@ class App extends Component {
           this.setState({ message: response.data.message });
       })
       .catch(err => console.error(err));
+
+      setTimeout(function() { document.getElementsByTagName('body')[0].scrollTop = 0; }, 2000);
   }
 
   /**

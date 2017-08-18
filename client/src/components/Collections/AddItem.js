@@ -50,6 +50,9 @@ class AddItem extends Component {
             this.setState({ message: res.data.message })
         })
         .catch(err => console.log(err));
+
+        setTimeout(function() { document.getElementsByTagName('body')[0].scrollTop = 0; }, 2000);
+        document.querySelector('form').reset();
     }
 
     // HANDLE INPUT FROM FORM ELEMENTS

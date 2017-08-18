@@ -48,10 +48,17 @@ body {
 }
 
 .formMessage {
-    font-size: 35px;
-    color: #472d36;
-    text-transform: uppercase;
+    padding: 5px;
+    width: 70%;
+    background-color: #b99ec1;
+    border-left: 6px solid #6e5276;
+    border-right: 6px solid #6e5276;
+    margin: 0 auto;
     text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+    margin-bottom: 30px;
 }
 
 .tooltip {
@@ -70,10 +77,8 @@ form p {
 form input[type="submit"], input[type="reset"] {
     width: 200px;
     height: 40px;
-    padding: 5px;
     border: none;
     font-size: 20px;
-    letter-spacing: 1px;
     background-color: #574969;
     color: #9c89a1;
 }
@@ -167,7 +172,10 @@ a:hover {
 
 .loading {
     text-align: center;
-    border: 1px solid #312842;
+}
+
+.loading img {
+    border: 10px solid black;
 }
 
 .wrapper {

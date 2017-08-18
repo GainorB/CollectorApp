@@ -70,6 +70,8 @@ class UpdateItem extends Component {
             this.props.newCollectionData(this.props.shuffle(res.data.collection));
             this.setState({ message: res.data.message })})
         .catch(err => console.error(err));
+
+        setTimeout(function() { document.getElementsByTagName('body')[0].scrollTop = 0; }, 2000);
     }
 
     // HELPER METHOD THAT CHECKS STATE FOR UNDEFINED VALUES
