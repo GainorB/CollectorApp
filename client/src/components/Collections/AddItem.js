@@ -73,13 +73,15 @@ class AddItem extends Component {
 
     render(){
         return (
-            <AddItemForm 
-                handleNewItem={this.handleNewItem}
-                handleChange={this.handleChange}
-                message={this.state.message}
-                image={this.state.image}
-                title={this.state.title}
-            />
+            <div className="animated bounceInDown">
+                <AddItemForm 
+                    handleNewItem={this.handleNewItem}
+                    handleChange={this.handleChange}
+                    message={this.state.message}
+                    image={this.state.image}
+                    title={this.state.title}
+                />
+            </div>
         );
     }
 }

@@ -108,7 +108,7 @@ class Collection extends Component {
 
     render(){
         return (
-            <div className="collectionPage">
+            <div className="animated bounceInLeft collectionPage">
                 <p className="search"><input type="text" name="search" placeholder="Search" onChange={this.handleSearch} /></p>
                 <p className="formMessage" style={{ display: this.props.message !== '' ? "block" : "none" }}>{this.props.message}</p>
                 {this.renderCollection()}

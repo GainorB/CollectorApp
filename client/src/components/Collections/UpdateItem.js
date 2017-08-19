@@ -157,7 +157,7 @@ class UpdateItem extends Component {
     
     render(){
         return (
-            <div className="updateWrapper">
+            <div className="animated bounceInUp updateWrapper">
                 <p className="formTitle">Update sneaker</p>
                 <p className="formSubTitle">Whichever field isn't updated or left blank will default to its original value.</p>
                 <p className="formMessage" style={{ display: this.state.message !== '' ? "block" : "none" }}>{this.state.message}</p>
