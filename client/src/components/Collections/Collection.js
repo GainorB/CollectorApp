@@ -48,7 +48,7 @@ class Collection extends Component {
         if(e.target.getAttribute('class') === 'fa fa-minus'){
             e.target.setAttribute('class', 'fa fa-plus');
             e.target.parentNode.querySelector('.minimizedTitle').innerHTML = e.target.parentNode.querySelector('img').getAttribute('alt');
-            e.target.parentNode.style.height = '50px';
+            e.target.parentNode.style.height = '45px';
             e.target.parentNode.querySelector('img').style.display = 'none';
             e.target.parentNode.querySelector('.hidden').style.display = 'none';
         } else {

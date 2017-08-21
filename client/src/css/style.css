@@ -176,6 +176,8 @@ a:hover {
 
 .loading img {
     border: 10px solid black;
+    width: 300px;
+    height: 300px;
 }
 
 .wrapper {
@@ -190,9 +192,9 @@ a:hover {
 }
 
 .search input {
-    width: 300px;
-    height: 30px;
-    font-size: 25px;
+    width: 250px;
+    height: 20px;
+    font-size: 20px;
     padding: 10px;
     border: 0;
     text-align: center;
@@ -202,7 +204,7 @@ a:hover {
 }
 
 .search input[type=text]:focus {
-    width: 40%;
+    width: 50%;
 }
 
 .boxbox {
@@ -261,7 +263,7 @@ img {
 
 .minimizedTitle {
     text-align: center;
-    font-size: 25px;
+    font-size: 22px;
     text-transform: uppercase;
     letter-spacing: 1.3px;
 }
@@ -333,12 +335,22 @@ img {
 
 .NewUserForm,
 .ForgotForm,
-.LoginForm,
+.LoginForm {
+    text-align: center;
+    background-color: #c7b7c7;
+    width: 50%;
+    margin: auto;
+    padding: 15px 0px 15px 0px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+    transition: .3s;
+}
+
 .AddItemForm,
 .updateWrapper {
     text-align: center;
     background-color: #c7b7c7;
-    width: 50%;
+    width: 60%;
     margin: auto;
     padding: 15px 0px 15px 0px;
     box-sizing: border-box;
@@ -372,6 +384,10 @@ footer {
     margin-top: 200px;
     font-size: 13px;
     text-align: center;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 
 /*
@@ -454,7 +470,7 @@ footer {
     }
 
     .formMessage {
-        font-size: 30px;
+        font-size: 14px;
     }
 
     .formTitle {
@@ -481,5 +497,9 @@ footer {
 
     .search input {
         width: 200px;
+    }
+
+    .search input[type=text]:focus {
+        width: 80%;
     }
 }

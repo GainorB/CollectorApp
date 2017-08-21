@@ -8,10 +8,10 @@ const AddItemForm = props => {
 
         if(clicked === false) {
             clicked = true;
-            e.target.innerHTML = 'Less Options?';
+            e.target.innerHTML = 'less options?';
         } else {
             clicked = false;
-            e.target.innerHTML = 'More Options?';
+            e.target.innerHTML = 'more options?';
         }
 
         document.querySelector('.hidden').classList.toggle('show');
@@ -46,7 +46,7 @@ const AddItemForm = props => {
 
                     {(props.image === '') ? <p></p> : <p><img src={props.image} className="updateImage" alt={props.title} /></p>}
 
-                    <p className="formTitle moreOpt" onClick={(e) => handleClick(e)}>More Options?</p><br/>
+                    <p className="formTitle moreOpt" onClick={(e) => handleClick(e)}>more options?</p><br/>
                     
                     <div className="hidden">
                         <p>
